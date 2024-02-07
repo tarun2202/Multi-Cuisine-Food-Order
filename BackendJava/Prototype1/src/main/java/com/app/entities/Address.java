@@ -3,6 +3,7 @@ package com.app.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -34,12 +35,12 @@ public class Address extends BaseEntity{
 	@Column(nullable = false,length = 6)
 	private String pincode;
 	
-	@OneToOne
-	@JoinColumn(name = "customer_id")
+	@ManyToOne
+	@JoinColumn(name = "customer_id",columnDefinition = "INT DEFAULT 0 ",nullable = false)
 	private Customers customer;
 
-	@OneToOne
-	@JoinColumn(name = "vendor_id")	
+	@ManyToOne
+	@JoinColumn(name = "vendor_id",columnDefinition = "INT DEFAULT 0 ",nullable = false)	
 	private Vendors vendor;
 	
 	

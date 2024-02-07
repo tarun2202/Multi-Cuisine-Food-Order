@@ -20,7 +20,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true,exclude = "customer")
 public class Orders extends BaseEntity {
 
@@ -42,5 +41,17 @@ public class Orders extends BaseEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_id",nullable = false)
 	private Customers customer;
+
+	public Orders(Long id, double orderTotal,LocalDateTime deliveryTime, Status orderStatus,
+			Customers customer) {
+		super(id);
+		this.orderTotal = orderTotal;
+		this.orderTime = LocalDateTime.now();
+		this.deliveryTime = deliveryTime;
+		this.orderStatus = orderStatus;
+		this.customer = customer;
+	}
+	
+	
 	
 }

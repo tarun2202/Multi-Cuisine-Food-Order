@@ -49,7 +49,7 @@ public class Dish extends BaseEntity {
 	@Column(nullable = false,length = 255)
 	private String dishImage;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "vendor_id",nullable = false)
 	private Vendors vendor;
 	

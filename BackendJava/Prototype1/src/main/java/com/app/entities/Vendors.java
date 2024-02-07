@@ -1,9 +1,14 @@
 package com.app.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,5 +43,17 @@ public class Vendors extends BaseEntity {
 	@Column(nullable = false,columnDefinition = "VARCHAR(25) DEFAULT 'PENDING' ")
 	private Status vendorStatus;
 	
+	@OneToMany(mappedBy = "vendor",cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<Dish> dishes = new ArrayList<Dish>();
+	
+	public void addDish(Dish d) {
+		this.dishes.add(d);
+		d.setVendor(this);
+	}
+	
+	public void removeDish(Dish d) {
+		this.dishes.remove(d);
+		d.setVendor(null);
+	}
 	
 }

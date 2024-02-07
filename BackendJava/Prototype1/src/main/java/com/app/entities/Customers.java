@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -21,30 +22,40 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(callSuper = true,exclude = {"image","customerPassword"})
+@ToString(callSuper = true, exclude = { "image", "customerPassword" })
 public class Customers extends BaseEntity {
-	
-	@Column(nullable = false,length = 50)
+
+	@Column(nullable = false, length = 50)
 	private String customerName;
 
-	@Column(unique = true,nullable = false,length = 50)
+	@Column(unique = true, nullable = false, length = 50)
 	private String customerEmail;
-	
-	@Column(nullable = false,length = 255)
+
+	@Column(nullable = false, length = 255)
 	private String customerPassword;
-	
-	@Column(unique = true,nullable = false,length = 10)
+
+	@Column(unique = true, nullable = false, length = 10)
 	private String customerMobileNo;
-	
-	@Column(nullable = false,columnDefinition = "VARCHAR(255) DEFAULT 'https://cdn-icons-png.flaticon.com/128/149/149071.png' ")
-	private String image;
-	
+
+	@Lob
+	private byte[] image;
+
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false,columnDefinition = "VARCHAR(25) DEFAULT 'ACTIVE' ")
+	@Column(nullable = false, columnDefinition = "VARCHAR(25) DEFAULT 'ACTIVE' ")
 	private Status customerStatus;
-	
-	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,orphanRemoval = true)
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> orderList = new ArrayList<Orders>();
-	
-	//add helper methods to add and remove orders.
+
+	// add helper methods to add and remove orders.
+	public void addOrder(Orders o) {
+		orderList.add(o);
+		o.setCustomer(this);
+	}
+
+	public void removeOrder(Orders o) {
+		orderList.remove(o);
+		o.setCustomer(null);
+	}
+
 }

@@ -6,4 +6,6 @@ import com.app.entities.Customers;
 
 public interface CustomerDao extends JpaRepository<Customers,Long> {
 
+	Customers getByCustomerName(String customerName);
+
 }

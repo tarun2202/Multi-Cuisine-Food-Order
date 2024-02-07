@@ -6,4 +6,6 @@ import com.app.entities.Vendors;
 
 public interface VendorDao extends JpaRepository<Vendors, Long> {
 
+	Vendors getByVendorName(String vendorName);
+
 }
