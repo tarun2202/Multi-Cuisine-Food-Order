@@ -1,0 +1,5 @@
+package com.app.entities;
+
+public enum CuisineType {
+ ITALIAN,AMERICAN,JAPANESE,THAI,MEXICAN,FRENCH,CHINESE,INDIAN,LEBANESE,GREEK
+}
