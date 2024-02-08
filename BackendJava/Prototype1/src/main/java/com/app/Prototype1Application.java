@@ -17,7 +17,7 @@ public class Prototype1Application {
 	@Bean
 	public ModelMapper modelMapper() {
 		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
+		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD)
 				.setPropertyCondition(Conditions.isNotNull());
 		return mapper;
 	}

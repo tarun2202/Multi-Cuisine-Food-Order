@@ -59,13 +59,15 @@ public class FavouriteServiceImpl implements FavouriteService {
 		return new ApiResponseDTO("Favourite removed!");
 	}
 
+	
+	//custom query i.e jpql not working but native query is working fine but still hibernate seems to fire 4 queries
 	@Override
 	public List<FavouriteDTO> getAllFavouritesByCustomerId(Long customerId) {
 		
 		//below approach is firing 4 hibernate queries,need to find efficient aproach by using join or maybe native query
-		//Customers customer = customerDao.getReferenceById(customerId);
+		//Customers customer = customerDao.findById(customerId).orElseThrow();
 
-		List<Favourites> favourites = favouriteDao.getByCustomerId(customerId);
+		List<Favourites> favourites = favouriteDao.findByCustomerId(customerId);
 
 		return favourites.stream().map(fav -> mapper.map(fav, FavouriteDTO.class)).collect(Collectors.toList());
 	}

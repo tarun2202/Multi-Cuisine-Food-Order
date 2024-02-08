@@ -74,10 +74,8 @@ public class AddressServiceImpl implements AddressService {
 	public List<AddressDTO> getVendorAddress(Long vendorId) {
 
 		Vendors vendor = vendorDao.getReferenceById(vendorId);
-
 		// return list of address dto from here
 		List<Address> address = addressDao.getByVendor(vendor);
-
 		return address.stream().map(add -> mapper.map(add, AddressDTO.class)).collect(Collectors.toList());
 	}
 
@@ -94,7 +92,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public List<AddressDTO> getCustomerAddressByName(String customerName) {
 		Customers customer = customerDao.getByCustomerName(customerName);
-		
+
 		List<Address> address = addressDao.getByCustomer(customer);
 
 		return address.stream().map(add -> mapper.map(add, AddressDTO.class)).collect(Collectors.toList());

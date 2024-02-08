@@ -28,7 +28,7 @@ public class Review extends BaseEntity {
 	@JoinColumn(name="customer_id",nullable = false)
 	private Customers customer;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dish_id",nullable = false)
 	private Dish dish;
 	
