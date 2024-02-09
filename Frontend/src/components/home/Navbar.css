@@ -1,0 +1,32 @@
+.nav-container-fluid{
+    color: rgb(96, 177, 247);
+    display: flex;
+    gap: 1rem;
+    background-color: black;
+    padding-right: 100px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.nav-container-fluid ul{
+    display: flex;
+    gap: 2rem;
+    color:white;
+    list-style: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-top: 10px;
+}
+
+.nav-container-fluid a{
+    font-family: sans-serif;
+    font-size: 20px;
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+
+
+

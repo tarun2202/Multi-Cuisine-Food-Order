@@ -25,20 +25,9 @@ import VendDash from "./components/vendor/dashboard"
 
 
 
+
 function Launcher(){
 return <div>
-<Navbar bg="dark" data-bs-theme="dark" style={{fontFamily:"unset"}}>
-        <Container>
-          <Navbar.Brand href="/">foodie</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/home">home</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
-            <Nav.Link href="/about">AboutUs</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-   
-
 <Switch>
             <Route path="/" component = {Home} exact/>
             <Route path="/home" component = {Home} exact/>
