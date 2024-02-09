@@ -1,7 +1,6 @@
-import React from "react";
+import React, {useState, useEffect } from 'react';
 import "./Home.css";
 import Navbar from "./Navbar";
-import { useState,useEffect } from "react";
 import axios from "axios";
 
 
@@ -14,12 +13,12 @@ function Home() {
     const[error, setError] = useState("");
   
 
-    useEffect=(()=>{
+    useEffect(()=>{
       debugger;
       getDishes();
     },[]);
 
-    useEffect=(()=>
+    useEffect(()=>
   {
       console.log("Component Did Update is called..")
   }, [dishes,dish]);

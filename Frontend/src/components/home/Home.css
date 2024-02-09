@@ -31,11 +31,13 @@ h1{
    font-size: larger;
 }
 
-.grid-container{
-max-width: 200px;
-display: grid;
-grid-template-columns: auto-auto-auto-auto;
+.grid{
+display:grid;
+grid-template-columns: auto auto auto auto ;
 gap:2rem;
+/* justify-content: center; */
+align-content: space-evenly;
+padding-top: 50px;
 }
 
 
