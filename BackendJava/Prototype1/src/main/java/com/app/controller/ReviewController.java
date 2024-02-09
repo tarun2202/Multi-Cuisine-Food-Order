@@ -1,5 +1,8 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,7 @@ public class ReviewController {
 	
 	//add review
 	@PostMapping("/add/{customerId}/{dishId}")
-	public ResponseEntity<?> addReview(@PathVariable Long customerId,@PathVariable Long dishId,@RequestBody ReviewDTO reviewDetails){
+	public ResponseEntity<?> addReview(@PathVariable @NotNull Long customerId,@PathVariable @NotNull Long dishId,@RequestBody @Valid ReviewDTO reviewDetails){
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(reviewService.addReview(customerId,dishId,reviewDetails));
 	}
@@ -41,14 +44,14 @@ public class ReviewController {
 	
 	//get review by customer id
 	@GetMapping("/customer/{customerId}")
-	public ResponseEntity<?> getAllReviewsOfCustomer(@PathVariable Long customerId){
+	public ResponseEntity<?> getAllReviewsOfCustomer(@PathVariable @NotNull Long customerId){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(reviewService.getAllReviewsOfCustomer(customerId));
 	}
 	
 	//get review of specific dish
 	@GetMapping("/{dishId}")
-	public ResponseEntity<?> getReviewByDish(@PathVariable Long dishId){
+	public ResponseEntity<?> getReviewByDish(@PathVariable @NotNull Long dishId){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(reviewService.getReviewByDish(dishId));
 	}

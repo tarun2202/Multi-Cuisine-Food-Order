@@ -22,7 +22,7 @@ import lombok.ToString;
 public class CartItem extends BaseEntity {
 
 	@Column(nullable = false)
-	private double unit_price;
+	private double unitPrice;
 	
 	@Column(columnDefinition = "INT DEFAULT 1 ")
 	private int quantity;

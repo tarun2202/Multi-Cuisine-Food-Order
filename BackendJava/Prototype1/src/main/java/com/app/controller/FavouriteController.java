@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,21 +27,20 @@ public class FavouriteController {
 
 	// add favourite by customer
 	@PostMapping("/add/{customerId}/{dishId}")
-	public ResponseEntity<?> addFavourite(@PathVariable Long customerId, @PathVariable Long dishId) {
+	public ResponseEntity<?> addFavourite(@PathVariable @NotNull Long customerId, @PathVariable @NotNull Long dishId) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(favouriteService.addFavourite(customerId, dishId));
 	}
 
 	// remove favourite by customer
 	@DeleteMapping("/delete/{favouriteId}")
-	public ResponseEntity<?> removeFavourite(@PathVariable Long favouriteId) {
+	public ResponseEntity<?> removeFavourite(@PathVariable @NotNull Long favouriteId) {
 		return ResponseEntity.status(HttpStatus.OK).body(favouriteService.removeFavourite(favouriteId));
 	}
 
-	//get list of favourites for customer
+	// get list of favourites for customer
 	@GetMapping("/get/{customerId}")
-	public ResponseEntity<?> getAllFavouritesByCustomerId(@PathVariable Long customerId){
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(favouriteService.getAllFavouritesByCustomerId(customerId));
+	public ResponseEntity<?> getAllFavouritesByCustomerId(@PathVariable @NotNull Long customerId) {
+		return ResponseEntity.status(HttpStatus.OK).body(favouriteService.getAllFavouritesByCustomerId(customerId));
 	}
-	
+
 }

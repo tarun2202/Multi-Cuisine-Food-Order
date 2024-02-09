@@ -36,11 +36,11 @@ public class Address extends BaseEntity{
 	private String pincode;
 	
 	@ManyToOne
-	@JoinColumn(name = "customer_id",columnDefinition = "INT DEFAULT 0 ",nullable = false)
+	@JoinColumn(name = "customer_id"/* ,columnDefinition = "INT DEFAULT 0 " */,nullable = false)
 	private Customers customer;
 
 	@ManyToOne
-	@JoinColumn(name = "vendor_id",columnDefinition = "INT DEFAULT 0 ",nullable = false)	
+	@JoinColumn(name = "vendor_id", /* columnDefinition = "INT DEFAULT 0 ", */nullable = false)	
 	private Vendors vendor;
 	
 	

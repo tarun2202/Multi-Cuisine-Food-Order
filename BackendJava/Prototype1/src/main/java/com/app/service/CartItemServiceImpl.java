@@ -26,12 +26,12 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	private DishDao dishDao;
-	
+
 	@Autowired
 	private ModelMapper mapper;
 
 	@Override
-	public ApiResponseDTO addCartItem(Long customerId, Long dishId,CartItemDTO cartItemDetails) {
+	public ApiResponseDTO addCartItem(Long customerId, Long dishId, CartItemDTO cartItemDetails) {
 
 		Customers customer = customerDao.getReferenceById(customerId);
 
@@ -43,6 +43,32 @@ public class CartItemServiceImpl implements CartItemService {
 		cartItemDao.save(cartItem);
 
 		return new ApiResponseDTO("Cart item added!");
+	}
+
+	@Override
+	public ApiResponseDTO updateCartItem(Long cartItemId, CartItemDTO cartItemDetails) {
+
+		CartItem cartItem = cartItemDao.getReferenceById(cartItemId);
+
+		cartItem.setQuantity(cartItemDetails.getQuantity());
+		cartItem.setUnitPrice(cartItemDetails.getUnit_price());
+		cartItem.setTotalAmount(cartItemDetails.getTotalAmount());
+		cartItem.setDiscount(cartItemDetails.getDiscount());
+		cartItemDao.save(cartItem);
+
+		return new ApiResponseDTO("Cart updated!");
+	}
+
+	@Override
+	public ApiResponseDTO deleteCartItem(Long cartItemId) {
+
+		CartItem cartItem = cartItemDao.getReferenceById(cartItemId);
+
+		cartItem.setCustomer(null);
+		cartItem.setDish(null);
+		cartItemDao.delete(cartItem);
+
+		return new ApiResponseDTO("Cart item deleted!");
 	}
 
 }

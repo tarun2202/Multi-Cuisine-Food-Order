@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class VendorController {
 	// Method:- GET
 	// Response:- List<DishDTO>,SC200
 	@GetMapping("/{vendorName}")
-	public ResponseEntity<?> getAllDishesByVendor(@PathVariable String vendorName){
+	public ResponseEntity<?> getAllDishesByVendor(@PathVariable @NotBlank String vendorName){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(vendorService.getAllDishesByVendor(vendorName));
 	}

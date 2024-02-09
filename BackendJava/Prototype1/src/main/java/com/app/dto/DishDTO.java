@@ -3,6 +3,8 @@ package com.app.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.app.entities.CuisineType;
 import com.app.entities.FoodCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,13 +23,19 @@ public class DishDTO {
 	private Long id;
 
 	@NotBlank
+	@Length(max = 25)
 	private String dishName;
 
 	@NotBlank
+	@Length(max = 255)
 	private String description;
 
+	@NotBlank
+	@Length(max = 25)
 	private FoodCategory category;
 
+	@NotBlank
+	@Length(max = 25)
 	private CuisineType cuisine;
 
 	@NotNull
@@ -40,6 +48,7 @@ public class DishDTO {
 	private double discount;
 
 	@NotBlank
+	@Length(max = 255)
 	private String dishImage;
 
 	@JsonProperty(access = Access.READ_ONLY)

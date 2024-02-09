@@ -1,6 +1,8 @@
 package com.app.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +47,7 @@ public class DishController {
 	// Method:- GET
 	// Response:- List<DishDTO>,SC200
 	@GetMapping("/{dishName}")
-	public ResponseEntity<?> getAllDishesByName(@PathVariable String dishName) {
+	public ResponseEntity<?> getAllDishesByName(@PathVariable @NotBlank String dishName) {
 		return ResponseEntity.status(HttpStatus.OK).body(dishService.getAllDishesByName(dishName));
 	}
 
@@ -54,7 +56,7 @@ public class DishController {
 	// Method:- POST
 	// Response:- msg,SC201
 	@PostMapping("/add/{vendorId}")
-	public ResponseEntity<?> addDishDetails(@PathVariable Long vendorId, @RequestBody @Valid DishDTO dish) {
+	public ResponseEntity<?> addDishDetails(@PathVariable @NotNull Long vendorId, @RequestBody @Valid DishDTO dish) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(dishService.addDishDetails(vendorId, dish));
 	}
 
@@ -63,9 +65,9 @@ public class DishController {
 	// Method:- DELETE
 	// Response:- msg,SC200
 	@DeleteMapping("/delete/{vendorName}/{dishId}")
-	public ResponseEntity<?> deleteDishDetails(@PathVariable Long dishId,@PathVariable String vendorName){
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(dishService.deleteDishDetails(dishId,vendorName));
+	public ResponseEntity<?> deleteDishDetails(@PathVariable @NotNull Long dishId,
+			@PathVariable @NotBlank String vendorName) {
+		return ResponseEntity.status(HttpStatus.OK).body(dishService.deleteDishDetails(dishId, vendorName));
 	}
 
 }
