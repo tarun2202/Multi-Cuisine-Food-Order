@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react';
 import "./Home.css";
 import Navbar from "./Navbar";
 import axios from "axios";
+import Footer from './Footer';
 
 
 function Home() {
@@ -33,8 +34,9 @@ function Home() {
   return (
    <div className="container-fluid">
     <Navbar/>
-    <h1 style={{fontSize:"175px",color:"rgba(0,14,98,1)",
-    fontFamily :"monospace",fontWeight:"bolder"}}>foodie</h1>
+    <h1 style={{fontSize:"120px",color:"rgba(0,14,98,1)",
+    fontFamily :"monospace",fontWeight:"bold",marginTop:"50px"}}>foodie</h1>
+    <div className="searchbar"><input style={{borderRadius :"5px",alignItems:"center",width:"100%"}}></input></div>
     <div className="grid">
     {dishes.map((dish)=>{
            return <div className="card" key={dish.id}>
@@ -44,6 +46,7 @@ function Home() {
     })
   }
     </div>
+     <Footer/>
    </div>
 
   ); 

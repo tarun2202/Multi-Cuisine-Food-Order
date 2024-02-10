@@ -40,4 +40,14 @@ align-content: space-evenly;
 padding-top: 50px;
 }
 
+.searchbar{
+   height: 8%;
+   width: 40%;
+   /* text-align: center; */
+   /* background-color: aliceblue; */
+   margin: auto;
+   text-align: center;
+   padding-top: 10px;
+}
+
 
