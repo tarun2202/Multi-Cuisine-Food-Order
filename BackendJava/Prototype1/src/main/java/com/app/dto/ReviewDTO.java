@@ -2,8 +2,6 @@ package com.app.dto;
 
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -20,7 +18,6 @@ public class ReviewDTO {
 	private Long id;
 	
 	@NotBlank
-	@Length(max = 255)
 	private String feedback;
 	
 	@JsonProperty(access = Access.READ_ONLY)

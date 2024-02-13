@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.CustomerDao;
+import com.app.dto.LoginDTO;
+import com.app.dto.LoginResponseDTO;
 import com.app.dto.OrderDTO;
 import com.app.entities.Customers;
 
@@ -28,7 +30,24 @@ public class CustomerServiceImpl implements CustomerService {
 
 		return customer.getOrderList().stream().map(orders -> mapper.map(orders, OrderDTO.class))
 				.collect(Collectors.toList());
-
 	}
+
+	@Override
+	public Long validateAndLogin(LoginDTO cred) {
+		Customers customer = customerDao.findByCustomerEmail(cred.getEmail()).orElse(null);
+	     if (customer!= null)
+	     {
+	    	 if(customer.getCustomerPassword().equals(cred.getPassword()))
+	    	 {
+	    		return customer.getId();
+	    	 }
+	    	 else {
+	    		 return 0L;
+	    	 }
+	     }
+	     else
+	    	 return -1L;
+	}
+	
 
 }
