@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +16,6 @@ function Contact() {
   const [msg, setMsg] = useState('');
   const [validUser, setValidUser] = useState(false);
 
-  const history = useHistory();
   const form = useRef();
 
   useEffect(() => {

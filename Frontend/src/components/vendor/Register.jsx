@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Register() {
   return (
     <div>
       <div class="container pt-3 pb-5 px-5 border border-2 rounded border-dark bg-light mt-5">
-        <p class="mb-3 text-center display-5">Admin Login</p>
+        <p class="mb-3 text-center display-5">Register</p>
         <div class="form-floating border border-dark rounded">
           <input
             type="email"
@@ -27,14 +27,14 @@ function Login() {
           <label for="password">Password</label>
         </div>
         <div class="text-center d-grid">
-          <Link to="/AdmDash"><button class="btn btn-dark btn-lg mt-5 btn-block">Submit</button></Link>
+      <Link to="/vendorlogin"><button class="btn btn-dark btn-lg mt-5 btn-block">Submit</button></Link>  
         </div>
-        {/* <p class="h5 mt-3">
-          Not Registered? <a href="">Register here!</a>
-        </p> */}
+        <p class="h5 mt-3">
+          Already Registered? <a href="/vendorLogin">Login here!</a>
+        </p>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Register;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function GenReg() {
+function Register() {
     return (
       <div>
         <div class="container pt-3 pb-5 px-5 border border-2 rounded border-dark bg-light mt-5">
@@ -29,4 +29,4 @@ function GenReg() {
     );
   }
   
-  export default GenReg;
+  export default Register;
