@@ -1,0 +1,17 @@
+package com.app.entities;
+
+public class Cart extends BaseEntity {
+
+	private double unit_price;
+	
+	private int quantity;
+	
+	private double discount;
+	
+	private double totalAmount;
+	
+	private Customers customer;
+	
+	private Dish dish;
+	
+}

@@ -1,0 +1,46 @@
+package com.app.dto;
+
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import com.app.entities.CuisineType;
+import com.app.entities.FoodCategory;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class DishDTO {
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long dishId;
+	
+	private String dishName;
+	
+	private String description;
+	
+	
+	private FoodCategory category;
+	
+	
+	
+	private CuisineType cuisine;
+	
+	private int rating;
+	
+	private double price;
+	
+	private double discount;
+	
+	private String dishImage;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long vendorId;
+	
+}

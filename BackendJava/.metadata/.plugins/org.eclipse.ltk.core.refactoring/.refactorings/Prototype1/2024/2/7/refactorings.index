@@ -1,0 +1,9 @@
+1707759039060	Delete element
+1707759114125	Rename package 'com.app.security.security'
+1707759321596	Delete elements
+1707826505238	Delete element
+1707826537722	Rename type 'JwtServiceImpl'
+1707849543263	Rename type 'AuthRequestDTO'
+1707849566022	Rename type 'AuthResponseDTO'
+1707892871793	Rename type 'UserController'
+1707908963468	Rename type 'SignUpDTO'

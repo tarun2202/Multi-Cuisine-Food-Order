@@ -1,0 +1,63 @@
+package com.app.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.DishDao;
+import com.app.dao.VendorDao;
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.DishDTO;
+import com.app.entities.Dish;
+
+@Service
+@Transactional
+public class DishServiceImpl implements DishService {
+
+	@Autowired
+	private DishDao dishDao;
+	
+	@Autowired
+	private VendorDao vendorDao;
+
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public List<DishDTO> getAllDishes() {
+		List<Dish> dishes = dishDao.findAll();
+
+		List<DishDTO> dishDTO = dishes.stream().map(dish -> mapper.map(dish, DishDTO.class))
+				.collect(Collectors.toList());
+
+		return dishDTO;
+	}
+
+	@Override
+	public List<DishDTO> getAllDishesByName(String dishName) {
+
+		List<Dish> dishes = dishDao.findByDishName(dishName);
+
+		List<DishDTO> dishDTO = dishes.stream().map(dish -> mapper.map(dish, DishDTO.class))
+				.collect(Collectors.toList());
+
+		return dishDTO;
+	}
+
+	@Override
+	public ApiResponseDTO addDishDetails(Long vendorId ,DishDTO dish) {
+		Dish dishEnt = mapper.map(dish, Dish.class);
+		Vendors vendor = ;
+		dishEnt.setVendor(vendor.getVendor());
+		dishDao.save(dishEnt);
+
+		return new ApiResponseDTO("Dish added succesfully!");
+	}
+
+}

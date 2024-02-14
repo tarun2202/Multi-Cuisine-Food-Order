@@ -1,0 +1,21 @@
+package com.app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.service.VendorService;
+
+@RestController
+@RequestMapping("/vendors")
+public class VendorController {
+
+	@Autowired
+	private VendorService vendorService;
+	
+	public VendorController() {
+		System.out.println("In ctor of "+getClass());
+	}
+	
+	
+}

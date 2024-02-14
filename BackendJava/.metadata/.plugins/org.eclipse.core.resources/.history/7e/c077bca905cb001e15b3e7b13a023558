@@ -1,0 +1,15 @@
+package com.app.service;
+
+import javax.validation.Valid;
+
+import com.app.dto.SignUpDTO;
+
+public class UserServiceImpl implements UserService {
+
+	@Override
+	public SignUpDTO userRegistration(@Valid SignUpDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

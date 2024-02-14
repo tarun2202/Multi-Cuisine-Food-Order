@@ -1,0 +1,79 @@
+package com.app.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.AddressDao;
+import com.app.dao.CustomerDao;
+import com.app.dao.VendorDao;
+import com.app.dto.AddressDTO;
+import com.app.dto.ApiResponseDTO;
+import com.app.entities.Address;
+import com.app.entities.Customers;
+import com.app.entities.Vendors;
+
+@Service
+@Transactional
+public class AddressServiceImpl implements AddressService {
+
+	@Autowired
+	private AddressDao addressDao;
+
+	@Autowired
+	private CustomerDao customerDao;
+
+	@Autowired
+	private VendorDao vendorDao;
+
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public ApiResponseDTO addCustomerAddress(Long customerId, AddressDTO addressDetails) {
+
+		Customers customer = customerDao.getReferenceById(customerId);
+
+		Address address = mapper.map(addressDetails, Address.class);
+
+		address.setCustomer(customer);
+		addressDao.save(address);
+
+		return new ApiResponseDTO("Address added succesfully!");
+	}
+
+	@Override
+	public ApiResponseDTO addVendorAddress(Long vendorId, AddressDTO addressDetails) {
+
+		Vendors vendor = vendorDao.getReferenceById(vendorId);
+
+		Address address = mapper.map(addressDetails, Address.class);
+
+		address.setVendor(vendor);
+		addressDao.save(address);
+
+		return new ApiResponseDTO("Address added succesfully!");
+	}
+
+	@Override
+	public AddressDTO getCustomerAddress(Long customerId) {
+
+		Customers customer = customerDao.getReferenceById(customerId);
+
+		Address address = addressDao.getByCustomer(customer);
+
+		return mapper.map(address, AddressDTO.class);
+	}
+
+	@Override
+	public AddressDTO getVendorAddress(Long vendorId) {
+
+		Vendors vendor = vendorDao.getReferenceById(vendorId);
+
+		Address address = addressDao.getByVendor(vendor);
+
+		return mapper.map(address, AddressDTO.class);
+	}
+
+}

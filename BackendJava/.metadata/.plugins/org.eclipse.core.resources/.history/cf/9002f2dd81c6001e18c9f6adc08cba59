@@ -1,0 +1,9 @@
+package com.app.service;
+
+import java.io.IOException;
+
+public interface ImageHandlingService {
+
+	byte[] downloadImage(Long customerId) throws IOException;
+
+}

@@ -1,0 +1,7 @@
+package com.app.entities;
+
+public class customers extends BaseEntity {
+	
+	private String customerName;
+	
+}

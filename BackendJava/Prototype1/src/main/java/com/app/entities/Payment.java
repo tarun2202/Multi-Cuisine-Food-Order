@@ -17,7 +17,6 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true,exclude = {"order"})
 public class Payment extends BaseEntity {
@@ -33,6 +32,14 @@ public class Payment extends BaseEntity {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id",nullable = false)
 	private Orders order;
+
+	public Payment() {
+		this.transactionId = java.util.UUID.randomUUID().toString();
+	}
+	
+	
+	
+	
 	
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dao.DishDao;
+import com.app.dao.FavouriteDao;
 import com.app.dao.VendorDao;
 import com.app.dto.ApiResponseDTO;
 import com.app.dto.DishDTO;
@@ -22,6 +23,9 @@ public class DishServiceImpl implements DishService {
 	@Autowired
 	private DishDao dishDao;
 
+	@Autowired
+	private FavouriteDao favouriteDao;
+	
 	@Autowired
 	private VendorDao vendorDao;
 
@@ -65,7 +69,7 @@ public class DishServiceImpl implements DishService {
 	public ApiResponseDTO deleteDishDetails(Long dishId, String vendorName) {
 		//3 queries fired by hibernate
 		Vendors vendor = vendorDao.getByVendorName(vendorName);
-
+	
 		Dish dish = dishDao.getReferenceById(dishId);
 
 		vendor.removeDish(dish);

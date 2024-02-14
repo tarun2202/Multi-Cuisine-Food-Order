@@ -1,0 +1,54 @@
+package com.app.dto;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class SignUpDTO {
+
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long id;
+
+	@NotBlank(message = "Name required")
+	private String name;
+
+	@Email(message = "Invalid Email!!!")
+	private String email;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String customerPassword;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String vendorPassword;
+
+	@Length(max = 10, message = "value cannot be more than 10 numbers")
+	private String mobileNo;
+
+	public SignUpDTO(Long id, @NotBlank(message = "Name required") String name,
+			@Email(message = "Invalid Email!!!") String email, String customerPassword, String vendorPassword,
+			@Length(max = 10, message = "value cannot be more than 10 numbers") String mobileNo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.customerPassword = customerPassword;
+		this.vendorPassword = vendorPassword;
+		this.mobileNo = mobileNo;
+	}
+
+	
+
+}

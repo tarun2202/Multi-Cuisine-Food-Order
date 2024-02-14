@@ -1,0 +1,32 @@
+package com.app.dto;
+
+import java.time.LocalDateTime;
+
+import com.app.entities.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class OrderDTO {
+
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long id;
+
+	private double orderTotal;
+
+	private LocalDateTime orderTime;
+
+	private LocalDateTime deliveryTime;
+
+	private Status orderStatus;
+
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long customerId;
+
+}

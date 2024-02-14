@@ -1,6 +1,8 @@
 package com.app.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.dao.AddressDao;
 import com.app.dto.AddressDTO;
 import com.app.service.AddressService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @Validated
 @RequestMapping("/address")
 public class AddressController {
@@ -29,7 +30,7 @@ public class AddressController {
 
 	// add address for customer
 	@PostMapping("/customer/{customerId}")
-	public ResponseEntity<?> addCustomerAddress(@PathVariable Long customerId,
+	public ResponseEntity<?> addCustomerAddress(@PathVariable @NotNull Long customerId,
 			@RequestBody @Valid AddressDTO addressDetails) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(addressService.addCustomerAddress(customerId, addressDetails));
@@ -37,33 +38,33 @@ public class AddressController {
 
 	// add address for vendor
 	@PostMapping("/vendor/{vendorId}")
-	public ResponseEntity<?> addVendorAddress(@PathVariable Long vendorId,
+	public ResponseEntity<?> addVendorAddress(@PathVariable @NotNull Long vendorId,
 			@RequestBody @Valid AddressDTO addressDetails) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(addressService.addVendorAddress(vendorId, addressDetails));
 	}
 
 	// get customer address
-	@GetMapping("/get/customer/{customerId}")
-	public ResponseEntity<?> getCustomerAddress(@PathVariable Long customerId) {
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<?> getCustomerAddress(@PathVariable @NotNull Long customerId) {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.getCustomerAddress(customerId));
 	}
 
 	// get vendor address
-	@GetMapping("/get/vendor/{vendorId}")
-	public ResponseEntity<?> getVendorAddress(@PathVariable Long vendorId) {
+	@GetMapping("/vendor/{vendorId}")
+	public ResponseEntity<?> getVendorAddress(@PathVariable @NotNull Long vendorId) {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.getVendorAddress(vendorId));
 	}
 
 	// get vendor address by name
-	@GetMapping("/get/vendorname/{vendorName}")
-	public ResponseEntity<?> getVendorAddressByName(@PathVariable String vendorName) {
+	@GetMapping("/vendorname/{vendorName}")
+	public ResponseEntity<?> getVendorAddressByName(@PathVariable @NotBlank String vendorName) {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.getVendorAddressByName(vendorName));
 	}
 	
 	// get customer address by name
-	@GetMapping("/get/customername/{customerName}")
-	public ResponseEntity<?> getCustomerAddressByName(@PathVariable String customerName) {
+	@GetMapping("/customername/{customerName}")
+	public ResponseEntity<?> getCustomerAddressByName(@PathVariable @NotBlank String customerName) {
 		return ResponseEntity.status(HttpStatus.OK).body(addressService.getCustomerAddressByName(customerName));
 	}
 

@@ -1,0 +1,7 @@
+package com.app.entities;
+
+public enum Status {
+	
+	ACTIVE/*for vendor,customer*/,INACTIVE/*for vendor,customer*/,PENDING/*for vendor*/,ORDERED,
+	
+}

@@ -24,15 +24,19 @@ public class AddressDTO {
 	private Long id;
 
 	@NotBlank
+	@Length(max = 100)
 	private String street;
 
 	@NotBlank
+	@Length(max = 25)
 	private String city;
 
 	@NotBlank
+	@Length(max = 25)
 	private String state;
 
 	@NotBlank
+	@Length(max = 25)
 	private String country;
 
 	@NotBlank

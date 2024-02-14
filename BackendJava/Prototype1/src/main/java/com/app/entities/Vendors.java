@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +39,10 @@ public class Vendors extends BaseEntity {
 		
 	@Column(nullable = false,columnDefinition = "INT DEFAULT 4 ")
 	private int ratings;
+	
+	@Enumerated(EnumType.STRING)
+	@JoinColumn(columnDefinition = "VARCHAR(25) DEFAULT 'VENDOR' ")
+	private UserRole userRole;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false,columnDefinition = "VARCHAR(25) DEFAULT 'PENDING' ")

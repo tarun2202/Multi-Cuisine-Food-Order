@@ -1,0 +1,24 @@
+package com.app.entities;
+
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(callSuper = true,exclude = {""})
+public class Vendors extends User {
+
+	private int ratings;
+	
+	private VendorStatus vendorStatus;
+	
+	
+}

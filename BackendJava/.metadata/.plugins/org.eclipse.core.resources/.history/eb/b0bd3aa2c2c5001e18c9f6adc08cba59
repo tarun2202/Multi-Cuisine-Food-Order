@@ -1,0 +1,16 @@
+package com.app.service;
+
+import com.app.dto.AddressDTO;
+import com.app.dto.ApiResponseDTO;
+
+public interface AddressService {
+
+	ApiResponseDTO addCustomerAddress(Long customerId,  AddressDTO addressDetails);
+
+	ApiResponseDTO addVendorAddress(Long vendorId,  AddressDTO addressDetails);
+
+	AddressDTO getCustomerAddress(Long customerId);
+
+	AddressDTO getVendorAddress(Long vendorId);
+
+}

@@ -1,0 +1,7 @@
+package com.app.service;
+
+public interface ImageHandlingService {
+
+	byte[] downloadImage(Long customerId) throws IOException;
+
+}

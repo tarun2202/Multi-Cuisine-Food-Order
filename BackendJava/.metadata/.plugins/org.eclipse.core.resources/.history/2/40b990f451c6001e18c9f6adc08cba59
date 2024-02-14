@@ -1,0 +1,23 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.CartItemDao;
+import com.app.dto.ApiResponseDTO;
+
+@Service
+@Transactional
+public class CartItemServiceImpl implements CartItemService {
+
+	@Autowired
+	private CartItemDao cartItemDao;
+
+	@Override
+	public ApiResponseDTO addCartItem(Long customerId, Long dishId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

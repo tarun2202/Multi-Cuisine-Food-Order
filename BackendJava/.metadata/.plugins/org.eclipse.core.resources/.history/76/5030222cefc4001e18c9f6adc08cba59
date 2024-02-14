@@ -1,0 +1,18 @@
+package com.app.service;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.DishDTO;
+
+public interface DishService {
+
+	List<DishDTO> getAllDishes();
+
+	List<DishDTO> getAllDishesByName(String dishName);
+
+	ApiResponseDTO addDishDetails(@Valid DishDTO dish);
+
+}

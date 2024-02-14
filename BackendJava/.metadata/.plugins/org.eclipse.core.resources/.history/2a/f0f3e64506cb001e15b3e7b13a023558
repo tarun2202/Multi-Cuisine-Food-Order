@@ -1,0 +1,13 @@
+package com.app.service;
+
+import javax.validation.Valid;
+
+import com.app.dto.SignUpDTO;
+
+public interface UserService {
+
+	SignUpDTO adminRegistration(@Valid SignUpDTO dto);
+
+	SignUpDTO customerRegistration(@Valid SignUpDTO dto);
+
+}

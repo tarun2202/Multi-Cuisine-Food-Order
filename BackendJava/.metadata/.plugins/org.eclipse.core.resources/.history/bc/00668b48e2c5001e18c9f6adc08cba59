@@ -1,0 +1,26 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.FavouriteDao;
+import com.app.dto.ApiResponseDTO;
+
+@Service
+@Transactional
+public class FavouriteServiceImpl implements FavouriteService {
+
+	@Autowired
+	private FavouriteDao favouriteDao;
+	
+	@Override
+	public ApiResponseDTO addFavourite(Long customerId, Long dishId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+
+}
