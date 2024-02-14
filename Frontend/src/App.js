@@ -1,4 +1,4 @@
-import Dashboard from "./components/user/Dashboard";
+import Menu from "./components/user/Menu";
 import Contact from "./components/user/Contact";
 import AboutUs from "./components/user/AboutUs";
 // import Login from "./components/user/Login";
@@ -17,6 +17,7 @@ import VendorLogin from "./components/vendor/Login"
 import Bill from "./components/user/Bill"
 import Alert1 from "./components/user/Alert1";
 import Register from "./components/user/Register"
+import VendorRegister from "./components/vendor/Register"
 import Profile from "./components/user/Profile"
 import AdmDash from "./components/admin/dashbpoard"
 import VendDash from "./components/vendor/dashboard"
@@ -33,7 +34,7 @@ return <>
             <Route path="/" element = {<Home/>}/>
             <Route path="/cust" element = {<CustomerHome/>} exact/>
             <Route path="/home" element = {<Home/>} exact/>
-            <Route path="/dashboard" element = {<Dashboard/>} exact/>
+            <Route path="/menu" element = {<Menu/>} exact/>
             <Route path="/about" element = {<AboutUs/>} exact/>
             <Route path="/contact" element = {<Contact/>} exact/>
             <Route path="/login" element = {<Login/>} exact/>
@@ -46,6 +47,7 @@ return <>
             <Route path="/bill" element = {<Bill/>} exact/>
             <Route path="/alert" element = {<Alert1/>} exact/>
             <Route path="/userRegister" element={<Register/>}/>
+            <Route path="/vendorRegister" element={<VendorRegister/>}/>
             <Route path="/profile" element = {<Profile/>} exact/>
             <Route path="/AdmDash" element = {<AdmDash/>} exact/>
             <Route path="/VendDash" element = {<VendDash/>} exact/>

@@ -1,40 +1,110 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./Register.css";
+import React,{ useEffect,useState} from "react";
+import Navbar from "../home/Navbar";
+import Footer from "../home/Footer";
+import {toast} from "react-toastify";
+import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
-  return (
-    <div>
-      <div class="container pt-3 pb-5 px-5 border border-2 rounded border-dark bg-light mt-5">
-        <p class="mb-3 text-center display-5">Register</p>
-        <div class="form-floating border border-dark rounded">
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="Enter email"
-          />
-          <label for="email">Email</label>
-        </div>
-        <div class="form-floating mt-5 border border-dark rounded">
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="Enter email"
-          />
-          <label for="password">Password</label>
-        </div>
-        <div class="text-center d-grid">
-      <Link to="/vendorlogin"><button class="btn btn-dark btn-lg mt-5 btn-block">Submit</button></Link>  
-        </div>
-        <p class="h5 mt-3">
-          Already Registered? <a href="/vendorLogin">Login here!</a>
-        </p>
-      </div>
-    </div>
-  );
-}
 
-export default Register;
+  const [lemail,setRemail] = useState('');
+  const [lpassword,setRpassword] = useState('');
+  const [lname,setRname] = useState('');
+  const [lmobileno,setRmobileno] = useState('');
+  const navigate = useNavigate();
+
+  // var cards = document.querySelectorAll('.card');
+
+  // [...cards].forEach((card)=>{
+  //   card.addEventListener( 'click', function() {
+  //     card.classList.toggle('is-flipped');
+  //   });
+  // });
+
+
+  const register = () =>{
+    debugger;
+    if(lemail==="" || lpassword===""){
+      toast.error("please enter email and password",{autoClose:2000});
+      return;
+    }
+  axios.post("http://localhost:8080/customers/login",
+  {
+    "name":lname,  "email":lemail, "password" : lpassword, "mobileno":lmobileno
+  })
+  .then(res=> {
+    debugger;
+    if(res.data.customerId===-1)
+    {
+      toast.error(res.data.message,{autoClose:2000});
+    }
+    else if(res.data.customerId===0){
+      toast.error(res.data.message,{autoClose:2000});
+    }
+    else{
+      sessionStorage.setItem("customerId",res.data.customerId);
+      sessionStorage.setItem("isLoggedIn",true);
+      navigate("/home");
+    }
+  }
+  )
+  .catch(error =>{
+    debugger;
+     console.log(error);
+  }
+  )
+  }
+
+  const  goToLogin=()=> {
+    navigate("/login");
+  }
+
+    return(
+      <>
+      <div className="vendor-register-main-container">    
+      <Navbar/>
+      
+          {/* <div className="col-3"></div> */}
+          {/* <div className="form-container"> */}
+          {/* <center> */}
+             <div className="vendor-reg-form">
+               <h2 style={{fontWeight:"bolder",color:"white"}}>Vendor Register</h2>
+               <label>name</label>
+               <input type="text" className="form-control" placeholder="vikas kumar" value ={lname} onChange={(e)=>{setRname(e.target.value)}}></input>
+               <label>email</label>
+               <input type="text" className="form-control" placeholder="abc@gmail.com" value ={lemail} onChange={(e)=>{setRemail(e.target.value)}}></input>
+               <label>password</label>
+               <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setRpassword(e.target.value)}}></input>
+               <label>mobile no.</label>
+               <input type="text" className="form-control" placeholder="1234567894" value={lmobileno} onChange={(e)=>{setRmobileno(e.target.value)}}></input>
+               
+               <div className="inner-container">
+                <div className="button-container">
+               <button className="btn btn-success" onClick={register}>Register</button>
+               <button className="btn btn-primary" onClick={goToLogin}>Login</button>
+               </div>
+               <div className="register-login-inner-container">
+               <p style={{color:"blue"}}>Already have an account?</p>
+               <Link to="/login" classname="login" >Login</Link>
+               </div>
+               </div>
+             </div>
+             {/* <div class="scene scene--card">
+  <div class="card">
+    <div class="card__face card__face--front">front</div>
+    <div class="card__face card__face--back">back</div>
+  </div>
+  </div> */}
+             {/* </center> */}
+            {/* </div> */}
+          {/* <div className="col-3"></div> */}
+          <Footer/>
+      </div>
+      
+      </>
+    ); 
+  }
+  
+  export default Register; 

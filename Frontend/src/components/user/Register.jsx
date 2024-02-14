@@ -10,8 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
 
-  const [lemail,setLemail] = useState('');
-  const [lpassword,setLpassword] = useState('');
+  const [lemail,setRemail] = useState('');
+  const [lpassword,setRpassword] = useState('');
+  const [lname,setRname] = useState('');
+  const [lmobileno,setRmobileno] = useState('');
   const navigate = useNavigate();
 
   // var cards = document.querySelectorAll('.card');
@@ -23,15 +25,18 @@ function Register() {
   // });
 
 
-  const login = () =>{
-    debugger;
+  const register = () =>{
     if(lemail==="" || lpassword===""){
       toast.error("please enter email and password",{autoClose:2000});
       return;
     }
+    else{
+      navigate("/login");
+      return;
+    }
   axios.post("http://localhost:8080/customers/login",
   {
-    "email":lemail, "password" : lpassword
+    "name":lname,  "email":lemail, "password" : lpassword, "mobileno":lmobileno
   })
   .then(res=> {
     debugger;
@@ -56,33 +61,37 @@ function Register() {
   )
   }
 
-  const  goToVendorLogin=()=> {
-    navigate("/vendorlogin");
+  const  goToVendorRegister=()=> {
+    navigate("/vendorRegister");
   }
 
     return(
       <>
-      <div className="login-container">    
+      <div className="register-main-container">    
       <Navbar/>
       
           {/* <div className="col-3"></div> */}
           {/* <div className="form-container"> */}
           {/* <center> */}
-             <div className="form">
+             <div className="user-reg-form">
                <h2 style={{fontWeight:"bolder",color:"white"}}>Register</h2>
+               <label>name</label>
+               <input type="text" className="form-control" placeholder="vikas kumar" value ={lname} onChange={(e)=>{setRname(e.target.value)}}></input>
                <label>email</label>
-               <input type="text" className="form-control" placeholder="abc@gmail.com" value ={lemail} onChange={(e)=>{setLemail(e.target.value)}}></input>
+               <input type="text" className="form-control" placeholder="abc@gmail.com" value ={lemail} onChange={(e)=>{setRemail(e.target.value)}}></input>
                <label>password</label>
-               <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setLpassword(e.target.value)}}></input>
+               <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setRpassword(e.target.value)}}></input>
+               <label>mobile no.</label>
+               <input type="text" className="form-control" placeholder="1234567894" value={lmobileno} onChange={(e)=>{setRmobileno(e.target.value)}}></input>
                
                <div className="inner-container">
                 <div className="button-container">
-               <button className="btn btn-success" onClick={login}>Login</button>
-               <button className="btn btn-primary" onClick={goToVendorLogin}>Login As Vendor</button>
+               <button className="btn btn-success" onClick={register}>Register</button>
+               <button className="btn btn-primary" onClick={goToVendorRegister}>Register As Vendor</button>
                </div>
-               <div className="register-container">
-               <p>Don't have an account?</p>
-               <Link to="/userRegister" classname="register" > Register Here</Link>
+               <div className="login-inner-container">
+               <p style={{color:"blue"}}>Already have an account?</p>
+               <Link to="/login" classname="login" >Login</Link>
                </div>
                </div>
              </div>

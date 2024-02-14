@@ -2,7 +2,7 @@ body{
     margin: 0;
     padding: 0;
  }
-.register-main-container{
+.vendor-register-main-container{
     /* margin-top: -1.5rem; */
     /* display:flex; */
     /* grid-template-columns: auto auto auto auto; */
@@ -18,10 +18,10 @@ body{
 }
 
 
-.user-reg-form{
+.vendor-reg-form{
     border:solid 0.1rem;
     border-radius: 0.5rem;
-    border-color: rgba(255, 255, 255, 0.864);
+    border-color: rgba(243, 241, 255, 0.864);
     padding: 1rem;
     background-color: inherit;
     margin-top: 6rem;
@@ -31,7 +31,7 @@ body{
     margin-left: 30%;
 }
 
-.user-reg-form input:hover{
+.vendor-reg-form input:hover{
   background-color: rgb(168, 244, 247);
 }
 
@@ -64,17 +64,17 @@ h2{
     margin-bottom: 1rem;
 }
 
-.inner-container .login-inner-container{
+.inner-container .register-login-inner-container{
     color: aliceblue;
     display: flex;
     margin-top: 3rem;
 }
 
-.inner-container .login-inner-container a{
+.inner-container .register-login-inner-container a{
   color: black;
 }
 
-.user-reg-form label{
+.vendor-reg-form label{
     margin-top: 0.5rem;
     font-size: larger;
     font-weight: bolder;
