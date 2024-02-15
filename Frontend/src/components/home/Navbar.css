@@ -10,7 +10,15 @@
     left: 0;
     right: 0;
     height: 4rem;
+    justify-content: space-around;
 }
+
+.nav-container-fluid .actions{
+     width: 5%;
+     display: flex;
+     justify-content: space-around;
+}
+
 
 .nav-container-fluid ul{
     display: flex;
@@ -19,6 +27,7 @@
     list-style: none;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding-top: 10px;
+    /* background-color: antiquewhite; */
 }
 
 .nav-container-fluid a{

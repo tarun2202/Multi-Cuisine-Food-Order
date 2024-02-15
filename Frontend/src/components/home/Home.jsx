@@ -66,6 +66,10 @@ function Home() {
         {
           toast.success("Dish Added to Cart",{autoClose:2000});
         }
+        else if(res.data.message==="This dish is already present in your cart")
+        {
+          toast.error("This dish is already present in your cart",{autoClose:2000});
+        }
         else{
           toast.error("something went wrong",{autoClose:2000});
         }
@@ -75,6 +79,32 @@ function Home() {
          console.log(error);
       }
       )
+    }
+
+
+    const addToFavourites=(dishId)=>{
+      debugger;
+      if(isLoggedIn==null){
+        toast.error("Please login first",{autoClose:2000});
+        return;
+      }
+      axios.post(`http://localhost:8080/favourites/add/${customerId}/${dishId}`)
+      .then(res=>{
+        debugger;
+        if(res.data.message==="Favourite added succesfully!")
+        {
+          toast.success("Favourite added succesfully!",{autoClose:2000});
+        }
+        else{
+          toast.error("something went wrong",{autoClose:2000});
+        }
+      })
+      .catch(error=>{
+        debugger;
+         console.log(error);
+      }
+      )
+  
     }
     
 return (
@@ -86,7 +116,7 @@ return (
     <div className="small-container" >
       <ul className='list-unstyled' id="links" >
       <li><Link to="/login">SignIn</Link></li>
-      <li><Link to="/register">SignUp</Link></li>
+      <li><Link to="/Userregister">SignUp</Link></li>
       </ul>
     </div>
   }
@@ -130,7 +160,7 @@ return (
                      <div className='buttons'>
                         <button className='btn btn-dark' onClick={()=>{addToCart(dish.id,dish.price,dish.discount)}}>Add To Cart</button>
                         <div className='favourite'>
-                          <i class="fa-solid fa-heart"></i>
+                          <i class="fa-solid fa-heart" onClick={()=>{addToFavourites(dish.id)}}></i>
                         </div>
                      </div>
                      </div>

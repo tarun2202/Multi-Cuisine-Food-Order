@@ -4,9 +4,13 @@ import { Last } from "react-bootstrap/esm/PageItem";
 import { useEffect,useState} from "react";
 import Navbar from "../home/Navbar";
 import Footer from "../home/Footer";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function Login() {
 
+  const [lemail,setLemail] = useState('');
+  const [lpassword,setLpassword] = useState('');
   const navigate = useNavigate();
 
   // var cards = document.querySelectorAll('.card');
@@ -21,9 +25,42 @@ function Login() {
     navigate("/login");
   }
 
+  const login=()=>{
+    debugger;
+    if(lemail==="" || lpassword===""){
+      toast.error("please enter email and password",{autoClose:2000});
+      return;
+    }
+  axios.post("http://localhost:8080/vendors/login",
+  {
+    "email":lemail, "password" : lpassword
+  })
+  .then(res=> {
+    debugger;
+    if(res.data.vendorId===-1)
+    {
+      toast.error(res.data.message,{autoClose:2000});
+    }
+    else if(res.data.vendorId===0){
+      toast.error(res.data.message,{autoClose:2000});
+    }
+    else{
+      sessionStorage.setItem("vendorId",res.data.vendorId);
+      sessionStorage.setItem("isLoggedIn",true);
+      toast.success("Vendor Login Successfull!",{autoClose:2000});
+      // navigate("/home");
+    }
+  }
+  )
+  .catch(error =>{
+    debugger;
+     console.log(error);
+  })
+  }
+
     return(
       <>
-      <div className="login-container">    
+      <div className="vendor-login-container">    
       <Navbar/>
       
           {/* <div className="col-3"></div> */}
@@ -32,18 +69,18 @@ function Login() {
              <div className="form">
                <h2 style={{fontWeight:"bolder",color:"white"}}>Vendor Login</h2>
                <label>email</label>
-               <input type="text" className="form-control" placeholder="abc@gmail.com"></input>
+               <input type="text" className="form-control" placeholder="abc@gmail.com"  value ={lemail} onChange={(e)=>{setLemail(e.target.value)}}></input>
                <label>password</label>
-               <input type="password" className="form-control" placeholder="********"></input>
+               <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setLpassword(e.target.value)}}></input>
                
                <div className="inner-container">
                 <div className="button-container">
-               <button className="btn btn-success">Login</button>
+               <button className="btn btn-success"onClick={login}>Login</button>
                <button className="btn btn-primary" onClick={goToUserLogin}>User Login</button>
                </div>
                <div className="register-container">
                <p>Don't have an account?</p>
-               <Link to="/Register" classname="register" > Register Here</Link>
+               <Link to="/Vendorregister" classname="register" > Register Here</Link>
                </div>
                </div>
              </div>
