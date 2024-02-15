@@ -65,7 +65,7 @@ public class CustomersTest {
     public void testOrderListNotNull() {
         assertNotNull(customers.getOrderList());
     }
-    
+
     @Test
     public void testRemoveOrder() {
         Orders order = mock(Orders.class);
