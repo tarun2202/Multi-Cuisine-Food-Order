@@ -1,8 +1,6 @@
 package com.app.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.app.entities.Admin;
 import com.app.entities.UserRole;
