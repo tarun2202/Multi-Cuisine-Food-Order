@@ -1,15 +1,23 @@
 package com.app.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.app.entities.Admin;
 import com.app.entities.Customers;
+import com.app.entities.UserRole;
 import com.app.entities.Vendors;
 
 public class CustomUserDetails implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Customers customer;
 
@@ -17,58 +25,98 @@ public class CustomUserDetails implements UserDetails {
 
 	private Admin admin;
 
-	public CustomUserDetails(Customers customer) {
+	private UserRole userRole;
+
+	public CustomUserDetails(Customers customer, UserRole userRole) {
 		this.customer = customer;
+		this.userRole = userRole;
 	}
 
-	public CustomUserDetails(Vendors vendor) {
+	public CustomUserDetails(Vendors vendor, UserRole userRole) {
 		this.vendor = vendor;
+		this.userRole = userRole;
 	}
 
-	public CustomUserDetails(Admin admin) {
+	public CustomUserDetails(Admin admin, UserRole userRole) {
 		this.admin = admin;
+		this.userRole = userRole;
+
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (userRole == UserRole.ROLE_CUSTOMER) {
+
+			return List.of(new SimpleGrantedAuthority(customer.getUserRole().toString()));
+
+		} else if (userRole == UserRole.ROLE_VENDOR) {
+
+			return List.of(new SimpleGrantedAuthority(vendor.getUserRole().toString()));
+
+		} else {
+
+			return List.of(new SimpleGrantedAuthority(admin.getUserRole().toString()));
+
+		}
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (userRole == UserRole.ROLE_CUSTOMER) {
+
+			return customer.getCustomerPassword();
+
+		} else if (userRole == UserRole.ROLE_VENDOR) {
+
+			return vendor.getVendorPassword();
+
+		} else {
+
+			return admin.getAdminPassword();
+
+		}
+
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (userRole == UserRole.ROLE_CUSTOMER) {
+
+			return customer.getCustomerEmail();
+
+		} else if (userRole == UserRole.ROLE_VENDOR) {
+
+			return vendor.getVendorEmail();
+
+		} else {
+
+			return admin.getAdminEmail();
+
+		}
+
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.service.CartItemService;
-import com.app.service.CustomerService;
 import com.app.service.OrderItemService;
 
 @RestController

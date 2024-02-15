@@ -8,8 +8,8 @@ import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.app.entities.UserRole;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,24 +22,35 @@ public class JwtService {// similar to JwtUtils
 
 	public static final String SECRET = "fdcee8383b311a91176fd3d239784688f496391c56b6ba553f19399788cbeaf5bab1aac0e719693c0f2fbd5a12ea723357e94fa9694ffdfb5a375c683db3fcae";
 
-	public String generateToken(String email) {
-
+	public String generateToken(String email, String userRole) {
+		System.out.println("Generate Token called.");
 		Map<String, Object> claims = new HashMap<String, Object>();
 
-		return createToken(claims, email);
+		return createToken(claims, email, userRole);
 	}
 
-	private String createToken(Map<String, Object> claims, String email) {
-		return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
+	private String createToken(Map<String, Object> claims, String email, String userRole) {
+		System.out.println("Create Token called.");
+		return Jwts.builder().setClaims(claims).setSubject(email).claim("userrole", userRole)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
 
 	public String extractEmail(String token) {
+		System.out.println("Extract email called.");
 		return extractClaim(token, Claims::getSubject);
 	}
 
+	public String extractUserRole(String token) {
+		Claims claims = extractAllClaims(token);
+		String roleString = claims.get("userrole", String.class);
+		return UserRole.valueOf(roleString).toString(); // Assuming UserRole is an enum with values Admin, Vendor,
+														// Customer
+	}
+
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+		System.out.println("Extract claim called.");
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims);
 	}
@@ -53,11 +64,13 @@ public class JwtService {// similar to JwtUtils
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
+		System.out.println("Validate Token called.");
 		final String email = extractEmail(token);
 		return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 
 	private Claims extractAllClaims(String token) {
+		System.out.println("Extract all claim called.");
 		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
 	}
 

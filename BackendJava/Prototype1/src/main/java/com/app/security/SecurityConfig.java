@@ -25,15 +25,13 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		return http.csrf().disable()
-				.authorizeHttpRequests()
-				.antMatchers("/customers/signin","/vendors/signin","/admin/signin","/customers/customersignup","/vendors/vendorsignup").permitAll()
-				.and()
-				.authorizeHttpRequests().anyRequest().authenticated()
-				.and()
-				.sessionManagement()
+		return http.csrf().disable().authorizeRequests()
+				.antMatchers("/customers/cussignin", "/vendors/vensignin", "/admin/admsignin", "/customers/customersignup",
+						"/vendors/vendorsignup", "/v*/api-doc*/**", "/swagger-ui/**")
+				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	@Bean
