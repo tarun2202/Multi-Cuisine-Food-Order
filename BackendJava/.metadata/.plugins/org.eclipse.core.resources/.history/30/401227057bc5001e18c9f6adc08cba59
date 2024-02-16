@@ -1,7 +1,0 @@
-package com.app.service;
-
-public interface CustomerService {
-
-	List<OrderDTO> getAllOrdersByCustomerId(Long customerId);
-
-}

@@ -1,0 +1,29 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.CustomerDao;
+import com.app.entities.Customers;
+
+
+@Service
+@Transactional
+public class CustomUserDetailsService implements UserDetailsService {
+
+	@Autowired 
+	private CustomerDao customerDao;
+	
+	
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Customers customer = customerDao.findByCustomerEmail(email)
+				.orElseThrow(()->new UsernameNotFoundException("Email not found!"));
+		return new CustomUserDetails(customer);
+	}
+
+}

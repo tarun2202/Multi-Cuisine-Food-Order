@@ -1,0 +1,72 @@
+package com.app.service;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+@Component
+public class JwtService {// similar to JwtUtils
+
+	public static final String SECRET = "fdcee8383b311a91176fd3d239784688f496391c56b6ba553f19399788cbeaf5bab1aac0e719693c0f2fbd5a12ea723357e94fa9694ffdfb5a375c683db3fcae";
+
+	public String generateToken(String email) {
+		System.out.println("Generate Token called.");
+		Map<String, Object> claims = new HashMap<String, Object>();
+
+		return createToken(claims, email);
+	}
+
+	private String createToken(Map<String, Object> claims, String email) {
+		System.out.println("Create Token called.");
+		return Jwts.builder().setClaims(claims).setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+	}
+
+	public String extractEmail(String token) {
+		System.out.println("Extract email called.");
+		return extractClaim(token, Claims::getSubject);
+	}
+
+	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+		System.out.println("Extract claim called.");
+		final Claims claims = extractAllClaims(token);
+		return claimsResolver.apply(claims);
+	}
+
+	private Boolean isTokenExpired(String token) {
+		return extractExpiration(token).before(new Date());
+	}
+
+	private Date extractExpiration(String token) {
+		return extractClaim(token, Claims::getExpiration);
+	}
+
+	public Boolean validateToken(String token, UserDetails userDetails) {
+		System.out.println("Validate Token called.");
+		final String email = extractEmail(token);
+		return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+
+	private Claims extractAllClaims(String token) {
+		System.out.println("Extract all claim called.");
+		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+	}
+
+	private Key getSignKey() {
+		byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+
+}
