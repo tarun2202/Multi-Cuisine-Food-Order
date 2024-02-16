@@ -26,8 +26,8 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		return http.csrf().disable().authorizeRequests()
-				.antMatchers("/customers/cussignin", "/vendors/vensignin", "/admin/admsignin", "/customers/customersignup",
-						"/vendors/vendorsignup", "/v*/api-doc*/**", "/swagger-ui/**")
+				.antMatchers("/dishes","/customer/signin", "/vendor/signin", "/admin/signin", "/customer/signup",
+						"/vendor/signup", "/v*/api-doc*/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

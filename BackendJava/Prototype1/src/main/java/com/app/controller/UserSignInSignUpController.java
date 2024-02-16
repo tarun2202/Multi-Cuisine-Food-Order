@@ -27,7 +27,7 @@ import com.app.service.JwtService;
 import com.app.service.UserService;
 
 @RestController
-@RequestMapping(value = { "/customers", "/vendors", "/admins" })
+@RequestMapping("/")
 @CrossOrigin
 @Validated
 public class UserSignInSignUpController {// userSignInController
@@ -45,19 +45,19 @@ public class UserSignInSignUpController {// userSignInController
 	private AuthenticationManager authManager;
 
 	// sign up of customer
-	@PostMapping("/customersignup")
+	@PostMapping("customer/signup")
 	public ResponseEntity<?> customerSignup(@RequestBody @Valid CustomerSignUpDTO dto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.customerRegistration(dto));
 	}
 
 	// sign up of vendor
-	@PostMapping("/vendorsignup")
+	@PostMapping("vendor/signup")
 	public ResponseEntity<?> vendorSignup(@RequestBody @Valid VendorSignUpDTO dto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.vendorRegistration(dto));
 	}
 
 	// eq to signIn user
-	@PostMapping("/cussignin")
+	@PostMapping("customer/signin")
 	public ApiResponseDTO customerSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Customer Sign In");
@@ -76,7 +76,7 @@ public class UserSignInSignUpController {// userSignInController
 		}
 	}
 
-	@PostMapping("/vensignin")
+	@PostMapping("vendor/signin")
 	public ApiResponseDTO vendorSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Vendor Sign In");
@@ -94,7 +94,7 @@ public class UserSignInSignUpController {// userSignInController
 		}
 	}
 
-	@PostMapping("/admsignin")
+	@PostMapping("admin/signin")
 	public ApiResponseDTO adminSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Admin Sign In");

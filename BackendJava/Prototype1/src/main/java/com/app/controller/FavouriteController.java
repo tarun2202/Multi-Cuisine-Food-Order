@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +27,7 @@ public class FavouriteController {
 	private FavouriteService favouriteService;
 
 	// add favourite by customer
+	
 	@PostMapping("/{customerId}/{dishId}")
 	public ResponseEntity<?> addFavourite(@PathVariable @NotNull Long customerId, @PathVariable @NotNull Long dishId) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(favouriteService.addFavourite(customerId, dishId));
