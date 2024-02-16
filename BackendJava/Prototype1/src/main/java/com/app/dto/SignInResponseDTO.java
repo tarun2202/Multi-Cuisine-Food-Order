@@ -14,6 +14,6 @@ import lombok.ToString;
 public class SignInResponseDTO {
 
 	private String jwt;
-	private String mesg;
+	private Long id;
 
 }

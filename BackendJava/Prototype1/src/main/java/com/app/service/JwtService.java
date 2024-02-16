@@ -6,10 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.app.dao.AdminDao;
+import com.app.dao.CustomerDao;
+import com.app.dao.VendorDao;
+import com.app.entities.Admin;
+import com.app.entities.Customers;
 import com.app.entities.UserRole;
+import com.app.entities.Vendors;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,6 +28,15 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {// similar to JwtUtils
 
 	public static final String SECRET = "fdcee8383b311a91176fd3d239784688f496391c56b6ba553f19399788cbeaf5bab1aac0e719693c0f2fbd5a12ea723357e94fa9694ffdfb5a375c683db3fcae";
+
+	@Autowired
+	private CustomerDao customerDao;
+
+	@Autowired
+	private VendorDao vendorDao;
+
+	@Autowired
+	private AdminDao adminDao;
 
 	public String generateToken(String email, String userRole) {
 		System.out.println("Generate Token called.");
@@ -40,6 +56,20 @@ public class JwtService {// similar to JwtUtils
 	public String extractEmail(String token) {
 		System.out.println("Extract email called.");
 		return extractClaim(token, Claims::getSubject);
+	}
+
+	public Long getId(String token) {
+		if (extractUserRole(token) == UserRole.ROLE_CUSTOMER.toString()) {
+			Customers customer = customerDao.findByCustomerEmail(extractEmail(token)).orElseThrow();
+			return customer.getId();
+		} else if (extractUserRole(token) == UserRole.ROLE_VENDOR.toString()) {
+			Vendors vendor = vendorDao.findByVendorEmail(extractEmail(token)).orElseThrow();
+			return vendor.getId();
+		}else if(extractUserRole(token) == UserRole.ROLE_ADMIN.toString()) {
+			Admin admin = adminDao.findByAdminEmail(extractEmail(token)).orElseThrow();
+			return admin.getId();
+		}
+		return null;
 	}
 
 	public String extractUserRole(String token) {

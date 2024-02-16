@@ -58,7 +58,7 @@ public class UserSignInSignUpController {// userSignInController
 
 	// eq to signIn user
 	@PostMapping("customer/signin")
-	public ApiResponseDTO customerSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
+	public SignInResponseDTO customerSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Customer Sign In");
 		System.out.println(authReqDTO.toString());
@@ -69,15 +69,16 @@ public class UserSignInSignUpController {// userSignInController
 				.authenticate(new UsernamePasswordAuthenticationToken(authReqDTO.getEmail(), authReqDTO.getPassword()));
 
 		if (authentication.isAuthenticated()) {
-			return new ApiResponseDTO(
-					jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_CUSTOMER.toString()));
+			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_CUSTOMER.toString());
+			Long id = jwtService.getId(token);
+			return new SignInResponseDTO(token, id);
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");
 		}
 	}
 
 	@PostMapping("vendor/signin")
-	public ApiResponseDTO vendorSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
+	public SignInResponseDTO vendorSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Vendor Sign In");
 		System.out.println(authReqDTO.toString());
@@ -88,14 +89,16 @@ public class UserSignInSignUpController {// userSignInController
 				.authenticate(new UsernamePasswordAuthenticationToken(authReqDTO.getEmail(), authReqDTO.getPassword()));
 
 		if (authentication.isAuthenticated()) {
-			return new ApiResponseDTO(jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_VENDOR.toString()));
+			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_VENDOR.toString());
+			Long id = jwtService.getId(token);
+			return new SignInResponseDTO(token, id);
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");
 		}
 	}
 
 	@PostMapping("admin/signin")
-	public ApiResponseDTO adminSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
+	public SignInResponseDTO adminSignIn(@RequestBody @Valid SignInRequestDTO authReqDTO) {
 
 		System.out.println("Admin Sign In");
 		System.out.println(authReqDTO.toString());
@@ -106,7 +109,11 @@ public class UserSignInSignUpController {// userSignInController
 				.authenticate(new UsernamePasswordAuthenticationToken(authReqDTO.getEmail(), authReqDTO.getPassword()));
 
 		if (authentication.isAuthenticated()) {
-			return new ApiResponseDTO(jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_ADMIN.toString()));
+
+			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_ADMIN.toString());
+			Long id = jwtService.getId(token);
+			return new SignInResponseDTO(token, id);
+
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");
 		}
