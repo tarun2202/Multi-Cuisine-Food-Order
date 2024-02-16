@@ -5,6 +5,10 @@
    /* position: fixed; */
 }
 
+.actions{
+   background-color: #f2e9e9;
+}
+
 .home-container .main-container{
    width: 100%;
    /* background-color: chocolate;

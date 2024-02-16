@@ -12,7 +12,7 @@ import Cart from "./components/user/Cart";
 import Home from "./components/home/Home";
 import AddRest from "./components/admin/Login";
 import Login from "./components/General/Login";
-import UserLogin from "./components/user/Register"
+// import UserLogin from "./components/user/Register"
 import VendorLogin from "./components/vendor/Login"
 import Bill from "./components/user/Bill"
 import Alert1 from "./components/user/Alert1";
@@ -23,6 +23,9 @@ import AdmDash from "./components/admin/dashbpoard"
 import VendDash from "./components/vendor/dashboard"
 import CustomerHome from "./components/home/CustomerHome";
 import { ToastContainer } from "react-toastify";
+import Favourites from "./components/user/Favourite"
+import Payment from "./components/user/Payment";
+import VendorMenu from "./components/vendor/Menu";
 
 
 
@@ -43,7 +46,7 @@ return <>
             <Route path="/cart" element = {<Cart/>} exact/>
             <Route path="/addrest" element = {<AddRest/>} exact/>
             <Route path="/vendorlogin" element = {<VendorLogin/>} exact/>
-            <Route path="/userlogin" element = {<UserLogin/>} exact/>
+            {/* <Route path="/userlogin" element = {<UserLogin/>} exact/> */}
             <Route path="/bill" element = {<Bill/>} exact/>
             <Route path="/alert" element = {<Alert1/>} exact/>
             <Route path="/userRegister" element={<Register/>}/>
@@ -51,6 +54,9 @@ return <>
             <Route path="/profile" element = {<Profile/>} exact/>
             <Route path="/AdmDash" element = {<AdmDash/>} exact/>
             <Route path="/VendDash" element = {<VendDash/>} exact/>
+            <Route path="/favourites" element = {<Favourites/>} exact/>
+            <Route path="/payment" element = {<Payment/>} exact/>
+            <Route path="/vendorMenu" element = {<VendorMenu/>} exact/>
             
 </Routes>
 <ToastContainer

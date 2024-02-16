@@ -1,0 +1,70 @@
+.favourites-container{
+    width: 100%;
+    background-image: linear-gradient(green,white);
+    padding-top: 4rem;
+}
+
+.favourites-container h1{
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 5rem;
+    font-weight: bolder;
+}
+
+.boxes{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.boxes .box{
+   display: flex;
+   flex-direction:column;
+   background-color: rgb(255, 255, 255);
+   border-radius: 1rem;
+}
+
+.boxes .box h2{
+    text-align: left;
+ }
+
+
+.boxes .box .menu-image{
+    width: 100%;
+    /* background-color: red; */
+}
+
+.menu-image img{
+    height: 15rem;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.content{
+    padding: 0.5rem;
+    background-color: rgb(211, 222, 246);
+}
+
+
+.buttons .favourite{
+    /* background-color: rgb(255, 255, 255); */
+    padding: 1rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.buttons .favourite i{
+    font-size: 1.5rem;
+}
+
+.empty{
+    background-color: black;
+}
+
+.empty h2{
+    color: aqua;
+}
