@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.dto.ApiResponseDTO;
 import com.app.dto.FavouriteDTO;
+import com.app.dto.FavouriteResponseDTO;
 
 public interface FavouriteService {
 
@@ -11,6 +12,6 @@ public interface FavouriteService {
 
 	ApiResponseDTO removeFavourite(Long favouriteId);
 
-	List<FavouriteDTO> getAllFavouritesByCustomerId(Long customerId);
+	List<FavouriteResponseDTO> getAllFavouritesByCustomerId(Long customerId);
 
 }

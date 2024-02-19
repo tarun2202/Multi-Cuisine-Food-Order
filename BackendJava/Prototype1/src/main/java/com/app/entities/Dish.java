@@ -1,11 +1,19 @@
 package com.app.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,5 +59,8 @@ public class Dish extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "vendor_id",nullable = false)
 	private Vendors vendor;
+	
+	@OneToOne(mappedBy = "dish",cascade = CascadeType.ALL)
+	private CartItem cartItem;
 	
 }

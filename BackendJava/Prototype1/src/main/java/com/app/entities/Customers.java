@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
@@ -37,20 +36,22 @@ public class Customers extends BaseEntity {
 
 	@Column(unique = true, nullable = false, length = 10)
 	private String customerMobileNo;
-	
-	@Enumerated(EnumType.STRING)
-	@JoinColumn(columnDefinition = "VARCHAR(25) DEFAULT 'CUSTOMER' ")
-	private UserRole userRole;
 
 	@Lob
 	private byte[] image;
+	
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
 
 	@Enumerated(EnumType.STRING)
-	@Column( nullable = false,  columnDefinition = "VARCHAR(25) DEFAULT 'ACTIVE' ")
+	@Column(nullable = false, columnDefinition = "VARCHAR(25) DEFAULT 'ACTIVE' ")
 	private Status customerStatus;
 
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> orderList = new ArrayList<Orders>();
+	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CartItem> cartItemList = new ArrayList<CartItem>();
 
 	// add helper methods to add and remove orders.
 	public void addOrder(Orders o) {
@@ -62,5 +63,7 @@ public class Customers extends BaseEntity {
 		orderList.remove(o);
 		o.setCustomer(null);
 	}
+	
+	
 
 }

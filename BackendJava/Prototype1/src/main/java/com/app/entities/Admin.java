@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,17 +16,16 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true, exclude = { "adminPassword" })
+@ToString(callSuper = true,exclude = {"adminPassword"})
 public class Admin extends BaseEntity {
-
-	@Column(nullable = false, unique = true)
+	
+	@Column(nullable = false,unique = true)
 	private String adminEmail;
-
+	
 	@Column(nullable = false)
 	private String adminPassword;
-
+	
 	@Enumerated(EnumType.STRING)
-	@JoinColumn(columnDefinition = "VARCHAR(25) DEFAULT 'ADMIN' ")
 	private UserRole userRole;
-
+	
 }

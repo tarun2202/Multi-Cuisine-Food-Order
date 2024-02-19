@@ -1,7 +1,6 @@
 package com.app.controller;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class OrderController {
 	// Method:- POST
 	// Response:- msg,SC201
 	@PostMapping("/{customerId}")
-	public ResponseEntity<?> addOrder(@PathVariable @NotNull Long customerId,@RequestBody @Valid OrderDTO orderDetails){
+	public ResponseEntity<?> addOrder(@PathVariable Long customerId,@RequestBody @Valid OrderDTO orderDetails){
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(orderService.placeOrder(customerId,orderDetails));
 	}

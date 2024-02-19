@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CartItemDTO {
+   public class CartItemResponseDTO {
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
@@ -31,9 +31,15 @@ public class CartItemDTO {
 	@JsonProperty(access = Access.READ_ONLY)
 	private Long dishId;
 	
+	private String dishName;
+	
+	private String dishImage;
+	
+	private String vendorName;
+	
 
-	public CartItemDTO(Long id, double unit_price, int quantity, double discount, double totalAmount, Long customerId,
-			Long dishId, @NotBlank String dishName, String dishImage) {
+	public CartItemResponseDTO(Long id, double unit_price, int quantity, double discount, double totalAmount, Long customerId,
+			Long dishId, @NotBlank String dishName, String dishImage,String vendorName) {
 		super();
 		this.id = id;
 		this.unit_price = unit_price;
@@ -42,6 +48,9 @@ public class CartItemDTO {
 		this.totalAmount = totalAmount;
 		this.customerId = customerId;
 		this.dishId = dishId;
+		this.dishName=dishName;
+		this.dishImage=dishImage;
+		this.vendorName=vendorName;
 	}
 	
 	

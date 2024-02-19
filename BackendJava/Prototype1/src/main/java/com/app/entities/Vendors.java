@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -41,14 +41,13 @@ public class Vendors extends BaseEntity {
 	private int ratings;
 	
 	@Enumerated(EnumType.STRING)
-	@JoinColumn(columnDefinition = "VARCHAR(25) DEFAULT 'VENDOR' ")
-	private UserRole userRole;
-	
-	@Enumerated(EnumType.STRING)
 	@Column(nullable = false,columnDefinition = "VARCHAR(25) DEFAULT 'PENDING' ")
 	private Status vendorStatus;
 	
-	@OneToMany(mappedBy = "vendor",cascade = CascadeType.ALL,orphanRemoval = true)
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
+	
+	@OneToMany(mappedBy = "vendor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
 	private List<Dish> dishes = new ArrayList<Dish>();
 	
 	public void addDish(Dish d) {
@@ -56,9 +55,9 @@ public class Vendors extends BaseEntity {
 		d.setVendor(this);
 	}
 	
-	public void removeDish(Dish d) {
-		this.dishes.remove(d);
-		d.setVendor(null);
+	public void removeDish(Dish dish) {
+		this.dishes.remove(dish);
+		dish.setVendor(null);
 	}
 	
 }

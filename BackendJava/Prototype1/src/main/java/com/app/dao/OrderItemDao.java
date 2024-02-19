@@ -1,9 +1,16 @@
 package com.app.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.app.entities.Dish;
 import com.app.entities.OrderItems;
+import com.app.entities.Orders;
 
 public interface OrderItemDao extends JpaRepository<OrderItems, Long> {
 
+	List<OrderItems> getByOrder(Orders order);
+	
+	List<OrderItems> findByDish(Dish dish);
 }

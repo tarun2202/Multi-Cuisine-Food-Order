@@ -15,7 +15,7 @@ public class ApiResponseDTO {
 	
 	private String message;
 
-	public ApiResponseDTO( String message) {
+	public ApiResponseDTO(String message) {
 		super();
 		this.timeStamp = LocalDateTime.now();
 		this.message = message;

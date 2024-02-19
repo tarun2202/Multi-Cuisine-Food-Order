@@ -3,8 +3,6 @@ package com.app.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.app.entities.CuisineType;
 import com.app.entities.FoodCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,28 +12,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
+
 @ToString
 public class DishDTO {
 
-	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
 
 	@NotBlank
-	@Length(max = 25)
 	private String dishName;
 
 	@NotBlank
-	@Length(max = 255)
 	private String description;
 
-	@NotBlank
-	@Length(max = 25)
 	private FoodCategory category;
 
-	@NotBlank
-	@Length(max = 25)
 	private CuisineType cuisine;
 
 	@NotNull
@@ -48,10 +38,99 @@ public class DishDTO {
 	private double discount;
 
 	@NotBlank
-	@Length(max = 255)
 	private String dishImage;
 
-	@JsonProperty(access = Access.READ_ONLY)
+//	@JsonProperty(access = Access.READ_ONLY)
 	private Long vendorId;
+	
+	private String vendorName;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDishName() {
+		return dishName;
+	}
+
+	public void setDishName(String dishName) {
+		this.dishName = dishName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public FoodCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(FoodCategory category) {
+		this.category = category;
+	}
+
+	public CuisineType getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(CuisineType cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	public String getDishImage() {
+		return dishImage;
+	}
+
+	public void setDishImage(String dishImage) {
+		this.dishImage = dishImage;
+	}
+
+	public Long getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(Long vendorId) {
+		this.vendorId = vendorId;
+	}
+
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
 
 }

@@ -15,5 +15,5 @@ public class SignInResponseDTO {
 
 	private String jwt;
 	private Long id;
-
+	private String mesg;
 }

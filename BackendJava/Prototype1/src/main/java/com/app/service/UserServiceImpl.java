@@ -8,10 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.dao.AddressDao;
 import com.app.dao.CustomerDao;
 import com.app.dao.VendorDao;
+import com.app.dto.ApiResponseDTO;
 import com.app.dto.CustomerSignUpDTO;
 import com.app.dto.VendorSignUpDTO;
+import com.app.entities.Address;
 import com.app.entities.Customers;
 import com.app.entities.Status;
 import com.app.entities.UserRole;
@@ -26,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private VendorDao vendorDao;
+	
+	@Autowired
+	private AddressDao addressDao;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -34,21 +40,45 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder encoder;
 
 	@Override
-	public CustomerSignUpDTO customerRegistration(@Valid CustomerSignUpDTO dto) {
+	public ApiResponseDTO customerRegistration(@Valid CustomerSignUpDTO dto) {
 
-		Customers customer = mapper.map(dto, Customers.class);
+		Customers customer=new Customers();
+        
+		customer.setCustomerName(dto.getCustomerName());
+		
+		customer.setCustomerEmail(dto.getCustomerEmail());
+		
+		customer.setCustomerMobileNo(dto.getCustomerMobileNo());
 
-		customer.setCustomerPassword(encoder.encode(customer.getCustomerPassword()));
+		customer.setCustomerPassword(encoder.encode(dto.getCustomerPassword()));
+		
+		customer.setImage(null);
 
 		customer.setCustomerStatus(Status.ACTIVE);
 
 		customer.setUserRole(UserRole.ROLE_CUSTOMER);
-
-		return mapper.map(customerDao.save(customer), CustomerSignUpDTO.class);
+		
+		customerDao.save(customer);
+		
+		
+		
+//		Long customerId = customer.getId();		
+		Address address = new Address();
+		
+		address.setStreet(dto.getStreet());
+		address.setCity(dto.getCity());
+		address.setState(dto.getState());
+		address.setCountry(dto.getCountry());
+		address.setPincode(dto.getPincode());
+		address.setCustomer(customer);
+         
+		addressDao.save(address);
+		
+		return new ApiResponseDTO("Registration Successfull");
 	}
 
 	@Override
-	public VendorSignUpDTO vendorRegistration(@Valid VendorSignUpDTO dto) {
+	public ApiResponseDTO vendorRegistration(@Valid VendorSignUpDTO dto) {
 
 		Vendors vendor = mapper.map(dto, Vendors.class);
 
@@ -61,8 +91,10 @@ public class UserServiceImpl implements UserService {
 		System.out.println(vendor.toString());
 
 		vendor.setVendorPassword(encoder.encode(vendor.getVendorPassword()));
+		
+		vendorDao.save(vendor);
 
-		return mapper.map(vendorDao.save(vendor), VendorSignUpDTO.class);
+		return new ApiResponseDTO("Registration Successfull");
 	}
 
 }

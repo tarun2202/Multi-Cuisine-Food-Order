@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,13 +29,16 @@ public class SecurityConfig {
 
 		return http.csrf().disable().authorizeRequests()
 				.antMatchers("/dishes","/customer/signin", "/vendor/signin", "/admin/signin", "/customer/signup",
-						"/vendor/signup", "/v*/api-doc*/**", "/swagger-ui/**")
+						"/vendor/signup","/customers/login","/cartitems/{customerId}/{dishId}","/dishes/byname/{dishName}"
+						,"/favourites/**","/orders/{customerId}","/cartitems/{customerId}","/payments/{paymentMethod}/{orderId}"
+						,"/dishes/{vendorId}/{dishId}","/dishes/{vendorId}","/dishes/get/{dishId}","/admin/**","/admin/vendors/{vendorId}","/customers/{customerId}","/dishes/{vendorId}/{dishId}","/v*/api-doc*/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 
+	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configure) throws Exception {
 		return configure.getAuthenticationManager();

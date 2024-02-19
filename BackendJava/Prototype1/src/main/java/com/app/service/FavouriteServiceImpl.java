@@ -1,5 +1,6 @@
 package com.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,11 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dao.CustomerDao;
 import com.app.dao.DishDao;
 import com.app.dao.FavouriteDao;
+import com.app.dao.VendorDao;
 import com.app.dto.ApiResponseDTO;
 import com.app.dto.FavouriteDTO;
+import com.app.dto.FavouriteResponseDTO;
+import com.app.entities.CartItem;
 import com.app.entities.Customers;
 import com.app.entities.Dish;
 import com.app.entities.Favourites;
+import com.app.entities.Vendors;
 
 @Service
 @Transactional
@@ -29,6 +34,9 @@ public class FavouriteServiceImpl implements FavouriteService {
 
 	@Autowired
 	private DishDao dishDao;
+	
+	@Autowired
+	private VendorDao vendorDao;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -36,6 +44,13 @@ public class FavouriteServiceImpl implements FavouriteService {
 	@Override
 	public ApiResponseDTO addFavourite(Long customerId, Long dishId) {
 
+		List<Favourites> favList= favouriteDao.findByCustomerId(customerId);
+		
+		 for (Favourites fav : favList) {
+			    if(fav.getDish().getId()==dishId)
+			    	return new ApiResponseDTO("This dish is already present in your favourites");
+		}
+		
 		Customers customer = customerDao.getReferenceById(customerId);
 
 		Dish dish = dishDao.getReferenceById(dishId);
@@ -62,14 +77,28 @@ public class FavouriteServiceImpl implements FavouriteService {
 	
 	//custom query i.e jpql not working but native query is working fine but still hibernate seems to fire 4 queries
 	@Override
-	public List<FavouriteDTO> getAllFavouritesByCustomerId(Long customerId) {
+	public List<FavouriteResponseDTO> getAllFavouritesByCustomerId(Long customerId) {
 		
 		//below approach is firing 4 hibernate queries,need to find efficient aproach by using join or maybe native query
 		//Customers customer = customerDao.findById(customerId).orElseThrow();
 
 		List<Favourites> favourites = favouriteDao.findByCustomerId(customerId);
+		
+		List<FavouriteResponseDTO> favouriteResponseList = new ArrayList<FavouriteResponseDTO>();
+		
+		for ( Favourites fav : favourites) {
+			Dish dish = dishDao.findById(fav.getDish().getId()).orElse(null);
+			Vendors vendor = vendorDao.findById(dish.getVendor().getId()).orElse(null);
+			String dishName = dish.getDishName();
+			String dishImage = dish.getDishImage();
+			double discount = dish.getDiscount();
+			double unitprice = dish.getPrice();
+			String vendName = vendor.getVendorName();
+			FavouriteResponseDTO favouriteItemsResponse = new FavouriteResponseDTO(fav.getId(),dishName,dishImage,unitprice,discount,vendName);
+			favouriteResponseList.add(favouriteItemsResponse);
+		}
 
-		return favourites.stream().map(fav -> mapper.map(fav, FavouriteDTO.class)).collect(Collectors.toList());
+		return favouriteResponseList;
 	}
 
 }

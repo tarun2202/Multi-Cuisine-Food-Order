@@ -28,7 +28,7 @@ import com.app.service.UserService;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @Validated
 public class UserSignInSignUpController {// userSignInController
 
@@ -47,6 +47,7 @@ public class UserSignInSignUpController {// userSignInController
 	// sign up of customer
 	@PostMapping("customer/signup")
 	public ResponseEntity<?> customerSignup(@RequestBody @Valid CustomerSignUpDTO dto) {
+		System.out.println(dto.toString());
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.customerRegistration(dto));
 	}
 
@@ -71,7 +72,7 @@ public class UserSignInSignUpController {// userSignInController
 		if (authentication.isAuthenticated()) {
 			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_CUSTOMER.toString());
 			Long id = jwtService.getId(token);
-			return new SignInResponseDTO(token, id);
+			return new SignInResponseDTO(token, id,"signIn");
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");
 		}
@@ -91,7 +92,7 @@ public class UserSignInSignUpController {// userSignInController
 		if (authentication.isAuthenticated()) {
 			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_VENDOR.toString());
 			Long id = jwtService.getId(token);
-			return new SignInResponseDTO(token, id);
+			return new SignInResponseDTO(token, id,"signIn");
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");
 		}
@@ -112,7 +113,7 @@ public class UserSignInSignUpController {// userSignInController
 
 			String token = jwtService.generateToken(authReqDTO.getEmail(), UserRole.ROLE_ADMIN.toString());
 			Long id = jwtService.getId(token);
-			return new SignInResponseDTO(token, id);
+			return new SignInResponseDTO(token, id,"signIn");
 
 		} else {
 			throw new UsernameNotFoundException("Invalid user!");

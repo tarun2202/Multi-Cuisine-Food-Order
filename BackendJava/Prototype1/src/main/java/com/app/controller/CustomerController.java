@@ -1,15 +1,8 @@
 package com.app.controller;
 
-import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
-import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
-import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
-
-import java.io.IOException;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,56 +10,69 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.app.dao.CustomerDao;
+import com.app.dto.CustomerUpdateDTO;
+import com.app.dto.LoginDTO;
+import com.app.dto.LoginResponseDTO;
 import com.app.service.CustomerService;
-import com.app.service.ImageHandlingService;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @Validated
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-
-	@Autowired
-	@Qualifier("image_db")
-	private ImageHandlingService imageService;
-
+	
 	public CustomerController() {
-		System.out.println("In ctor of " + getClass());
+		System.out.println("In ctor of "+getClass());
 	}
-
+	
 	// find all orders placed by customer
 	// URL :- http://localhost:8080/dishes/
 	// Method:- GET
 	// Response:- List<DishDTO>,SC200
 	@GetMapping("/orders/{customerId}")
-	public ResponseEntity<?> getAllOrdersByCustomerId(@PathVariable @NotNull Long customerId) {
+	public ResponseEntity<?> getAllOrdersByCustomerId(@PathVariable Long customerId){
 		return ResponseEntity.ok(customerService.getAllOrdersByCustomerId(customerId));
 	}
-
-//  upload image from clnt n saving it either on db or in server side folder
-	// http://host:port/employees/images/{empId} ,
-	// method=POST , req param :
-	// multipart file(image data)
-	@PostMapping(value = "/images/{customerId}", consumes = "multipart/form-data") 
-	public ResponseEntity<?> uploadImage(@PathVariable @NotNull Long customerId, @RequestParam MultipartFile imageFile)
-			throws IOException {
-		System.out.println("in upload img " + customerId);
-		return ResponseEntity.status(HttpStatus.CREATED).body(imageService.uploadImage(customerId, imageFile));
+	
+	@GetMapping("/{customerId}")
+	public ResponseEntity<?> getProfile(@PathVariable Long customerId){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(customerService.getProfile(customerId));
 	}
-
-	// serve(download image) of specific emp
-	// http://host:port/employees/images/{empId} , method=GET
-	@GetMapping(value = "/images/{customerId}", produces = { IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE })
-	public ResponseEntity<?> serveEmpImage(@PathVariable @NotNull Long customerId) throws IOException {
-		System.out.println("in download img " + customerId);
-		return ResponseEntity.ok(imageService.downloadImage(customerId));
+	
+	@PutMapping("/{customerId}")
+	public ResponseEntity<?> updateProfile(@PathVariable Long customerId ,@RequestBody CustomerUpdateDTO updateDto){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(customerService.updateProfile(customerId,updateDto));
 	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody LoginDTO cred){
+	   Long customerId = customerService.validateAndLogin(cred);
+	   if(customerId==-1) {
+		  return ResponseEntity.ok(
+				  new LoginResponseDTO("email id not registered",-1L));
+	   }
+	   else if (customerId==0) {
+		   return ResponseEntity.ok(
+					  new LoginResponseDTO("invalid password",0L));
+	   }
+	   else{
+		   return ResponseEntity.ok(
+					  new LoginResponseDTO("Login successfull",customerId));
+	   }
+	}
+	
 }
+
+	
+

@@ -24,7 +24,7 @@ public class Favourites extends BaseEntity {
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customers customer;
 
-	@OneToOne(cascade = CascadeType.ALL/* ,orphanRemoval = true */)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dish_id", nullable = false)
 	private Dish dish;
 

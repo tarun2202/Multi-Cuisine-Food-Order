@@ -15,6 +15,7 @@ import com.app.dao.CustomerDao;
 import com.app.dao.VendorDao;
 import com.app.entities.Admin;
 import com.app.entities.Customers;
+import com.app.entities.Status;
 import com.app.entities.UserRole;
 import com.app.entities.Vendors;
 
@@ -26,9 +27,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtService {// similar to JwtUtils
-
-	public static final String SECRET = "fdcee8383b311a91176fd3d239784688f496391c56b6ba553f19399788cbeaf5bab1aac0e719693c0f2fbd5a12ea723357e94fa9694ffdfb5a375c683db3fcae";
-
+	
 	@Autowired
 	private CustomerDao customerDao;
 
@@ -37,6 +36,9 @@ public class JwtService {// similar to JwtUtils
 
 	@Autowired
 	private AdminDao adminDao;
+
+
+	public static final String SECRET = "fdcee8383b311a91176fd3d239784688f496391c56b6ba553f19399788cbeaf5bab1aac0e719693c0f2fbd5a12ea723357e94fa9694ffdfb5a375c683db3fcae";
 
 	public String generateToken(String email, String userRole) {
 		System.out.println("Generate Token called.");
@@ -49,27 +51,13 @@ public class JwtService {// similar to JwtUtils
 		System.out.println("Create Token called.");
 		return Jwts.builder().setClaims(claims).setSubject(email).claim("userrole", userRole)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
 
 	public String extractEmail(String token) {
 		System.out.println("Extract email called.");
 		return extractClaim(token, Claims::getSubject);
-	}
-
-	public Long getId(String token) {
-		if (extractUserRole(token) == UserRole.ROLE_CUSTOMER.toString()) {
-			Customers customer = customerDao.findByCustomerEmail(extractEmail(token)).orElseThrow();
-			return customer.getId();
-		} else if (extractUserRole(token) == UserRole.ROLE_VENDOR.toString()) {
-			Vendors vendor = vendorDao.findByVendorEmail(extractEmail(token)).orElseThrow();
-			return vendor.getId();
-		}else if(extractUserRole(token) == UserRole.ROLE_ADMIN.toString()) {
-			Admin admin = adminDao.findByAdminEmail(extractEmail(token)).orElseThrow();
-			return admin.getId();
-		}
-		return null;
 	}
 
 	public String extractUserRole(String token) {
@@ -107,6 +95,27 @@ public class JwtService {// similar to JwtUtils
 	private Key getSignKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(SECRET);
 		return Keys.hmacShaKeyFor(keyBytes);
+	}
+	
+	
+	public Long getId(String token) {
+		if (extractUserRole(token) == UserRole.ROLE_CUSTOMER.toString()) {
+			Customers customer = customerDao.findByCustomerEmail(extractEmail(token)).orElseThrow();
+			if(customer.getCustomerStatus()==Status.ACTIVE)
+				return customer.getId();
+				else
+				return 0L;
+		} else if (extractUserRole(token) == UserRole.ROLE_VENDOR.toString()) {
+			Vendors vendor = vendorDao.findByVendorEmail(extractEmail(token)).orElseThrow();
+			if(vendor.getVendorStatus()==Status.ACTIVE)
+			return vendor.getId();
+			else
+			return 0L;
+		}else if(extractUserRole(token) == UserRole.ROLE_ADMIN.toString()) {
+			Admin admin = adminDao.findByAdminEmail(extractEmail(token)).orElseThrow();
+			return admin.getId();
+		}
+		return null;
 	}
 
 }

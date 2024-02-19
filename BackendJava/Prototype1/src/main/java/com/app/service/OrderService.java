@@ -5,6 +5,6 @@ import com.app.dto.OrderDTO;
 
 public interface OrderService {
 
-	ApiResponseDTO placeOrder(Long customerId, OrderDTO orderDetails);
+	Long placeOrder(Long customerId, OrderDTO orderDetails);
 
 }

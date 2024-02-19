@@ -1,16 +1,25 @@
 package com.app.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.dao.CartItemDao;
 import com.app.dao.CustomerDao;
+import com.app.dao.DishDao;
 import com.app.dao.OrderDao;
-import com.app.dto.ApiResponseDTO;
+import com.app.dao.OrderItemDao;
 import com.app.dto.OrderDTO;
+import com.app.entities.CartItem;
 import com.app.entities.Customers;
+import com.app.entities.Dish;
+import com.app.entities.OrderItems;
 import com.app.entities.Orders;
+import com.app.entities.Status;
 
 
 @Service
@@ -25,15 +34,56 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private CartItemDao cartItemDao;
+	
+	@Autowired
+	private DishDao dishDao;
+	
+	@Autowired
+	private OrderItemDao orderItemDao;
+	
 
 	@Override
-	public ApiResponseDTO placeOrder(Long customerId, OrderDTO orderDetails) {
+	public Long placeOrder(Long customerId, OrderDTO orderDetails) {
 		
+		Orders order = new Orders();
+	    
 		Customers customer = customerDao.findById(customerId).orElseThrow();
+		
+		order.setCustomer(customer);
+		order.setOrderTotal(orderDetails.getOrderTotal());
+		order.setOrderTime(LocalDateTime.now());
+		order.setDeliveryTime(LocalDateTime.now().plusHours(1));
+		order.setOrderStatus(Status.ORDERED);
+		
+		orderDao.save(order);
+		
+		Long orderId = order.getId();
+		
+		List<CartItem> cartItemList = cartItemDao.findByCustomerId(customerId);
+			
+		for (CartItem cartItem : cartItemList) {
+			OrderItems oitem = new OrderItems();
+			oitem.setOrder(order);
+			Dish dish = dishDao.findById(cartItem.getDish().getId()).orElse(null);
+			oitem.setDish(dish);
+			oitem.setQuantity(cartItem.getQuantity());
+			oitem.setDiscount(cartItem.getDiscount());
+			oitem.setUnitPrice(cartItem.getUnit_price());
+			oitem.setTotalAmount(cartItem.getTotalAmount());
+			orderItemDao.save(oitem);
+		}
+		
+		for (CartItem cartItem : cartItemList) {
+			CartItem item = cartItemDao.findById(cartItem.getId()).orElse(null);
+			cartItemDao.delete(item);
+		}
+		
+//		customer.addOrder(mapper.map(orderDetails, Orders.class));
 
-		customer.addOrder(mapper.map(orderDetails, Orders.class));
-
-		return new ApiResponseDTO("Order placed succesfully!");
+		return orderId;
 	}
 
 }

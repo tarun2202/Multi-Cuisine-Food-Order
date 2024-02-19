@@ -22,5 +22,4 @@ public interface FavouriteDao extends JpaRepository<Favourites, Long> {
 			+ "WHERE f.customer_id = :customerId", nativeQuery = true)
 	List<Favourites> findByCustomerId2(Long customerId);
 
-
 }

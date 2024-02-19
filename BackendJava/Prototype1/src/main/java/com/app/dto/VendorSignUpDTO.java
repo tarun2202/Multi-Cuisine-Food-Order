@@ -37,4 +37,14 @@ public class VendorSignUpDTO {
 
 	@Length(max = 10, message = "value cannot be more than 10 numbers")
 	private String vendorMobileNo;
+	
+    private String street;
+	
+	private String city;
+	
+	private String state;
+	
+	private String country;
+	
+	private String pincode;
 }

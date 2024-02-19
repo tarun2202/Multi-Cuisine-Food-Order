@@ -1,5 +1,10 @@
 package com.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dao.CartItemDao;
 import com.app.dao.CustomerDao;
 import com.app.dao.DishDao;
+import com.app.dao.VendorDao;
 import com.app.dto.ApiResponseDTO;
 import com.app.dto.CartItemDTO;
+import com.app.dto.CartItemResponseDTO;
 import com.app.entities.CartItem;
 import com.app.entities.Customers;
 import com.app.entities.Dish;
+import com.app.entities.Vendors;
 
 @Service
 @Transactional
@@ -23,16 +31,23 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private VendorDao vendorDao;
 
 	@Autowired
 	private DishDao dishDao;
-
+	
 	@Autowired
 	private ModelMapper mapper;
 
 	@Override
-	public ApiResponseDTO addCartItem(Long customerId, Long dishId, CartItemDTO cartItemDetails) {
-
+	public ApiResponseDTO addCartItem(Long customerId, Long dishId,CartItemDTO cartItemDetails) {
+       List<CartItem> list = cartItemDao.findByCustomerId(customerId);
+       for (CartItem cartItem : list) {
+		    if(cartItem.getDish().getId()==dishId)
+		    	return new ApiResponseDTO("This dish is already present in your cart");
+	}
 		Customers customer = customerDao.getReferenceById(customerId);
 
 		Dish dish = dishDao.getReferenceById(dishId);
@@ -46,29 +61,62 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 
 	@Override
-	public ApiResponseDTO updateCartItem(Long cartItemId, CartItemDTO cartItemDetails) {
-
-		CartItem cartItem = cartItemDao.getReferenceById(cartItemId);
-
-		cartItem.setQuantity(cartItemDetails.getQuantity());
-		cartItem.setUnitPrice(cartItemDetails.getUnit_price());
-		cartItem.setTotalAmount(cartItemDetails.getTotalAmount());
-		cartItem.setDiscount(cartItemDetails.getDiscount());
-		cartItemDao.save(cartItem);
-
-		return new ApiResponseDTO("Cart updated!");
+	public List<CartItemResponseDTO> getCartItem(Long customerId) {
+	   
+		List<CartItem> cartItemsList =cartItemDao.findByCustomerId(customerId);
+		
+		List<CartItemResponseDTO> cartItemsResponseDTOList = new ArrayList<CartItemResponseDTO>();
+		
+		for (CartItem item : cartItemsList) {
+			Dish dish = dishDao.findById(item.getDish().getId()).orElse(null);
+			Vendors vendor = vendorDao.findById(dish.getVendor().getId()).orElse(null);
+			String dishName = dish.getDishName();
+			String dishImage = dish.getDishImage();
+			String vendorName = vendor.getVendorName();
+			CartItemResponseDTO cartItemDto = new CartItemResponseDTO(item.getId(),item.getUnit_price()
+					,item.getQuantity(),item.getDiscount(),item.getTotalAmount(),customerId
+					,dish.getId(),dishName,dishImage,vendorName);
+			cartItemsResponseDTOList.add(cartItemDto);
+		}
+		
+		return cartItemsResponseDTOList;
 	}
 
 	@Override
-	public ApiResponseDTO deleteCartItem(Long cartItemId) {
+	public ApiResponseDTO increaseQuantity(Long cartItemId) {
+		CartItem item = cartItemDao.findById(cartItemId).orElse(null);
+		int quantity= item.getQuantity();
+		item.setQuantity(quantity+1);
+		item.setTotalAmount(item.getUnit_price()*(quantity+1)*(1-item.getDiscount()));
+		cartItemDao.save(item);
+		return new ApiResponseDTO("Increased");
+	}
+	
+	@Override
+	public ApiResponseDTO decreaseQuantity(Long cartItemId) {
+		CartItem item = cartItemDao.findById(cartItemId).orElse(null);
+		int quantity= item.getQuantity();
+		if(quantity==1) {
+//			item.setCustomer(null);
+//			item.setDish(null);
+			cartItemDao.delete(item);
+			return new ApiResponseDTO("Deleted");
+		}
+		else {
+		item.setQuantity(quantity-1);
+		item.setTotalAmount(item.getUnit_price()*(quantity-1)*(1-item.getDiscount()));
+		cartItemDao.save(item);
+		return new ApiResponseDTO("Decreased");
+		}
+	}
 
-		CartItem cartItem = cartItemDao.getReferenceById(cartItemId);
-
-		cartItem.setCustomer(null);
-		cartItem.setDish(null);
-		cartItemDao.delete(cartItem);
-
-		return new ApiResponseDTO("Cart item deleted!");
+	@Override
+	public ApiResponseDTO deleteCartItem(Long customerId) {
+		List<CartItem> cartItemList = cartItemDao.findByCustomerId(customerId);
+		for (CartItem cartItem : cartItemList) {
+			cartItemDao.delete(cartItem);
+		}
+		return new ApiResponseDTO("Deleted");
 	}
 
 }
