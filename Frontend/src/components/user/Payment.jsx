@@ -4,6 +4,7 @@ import { useState,useEffect} from "react";
 import axios from "axios";
 import Footer from "../home/Footer";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Payment() {
 
@@ -13,6 +14,7 @@ function Payment() {
     const navigate = useNavigate();
     const [totalAmt,setTotalAmt] = useState(0.0);
     const [paymentOption, setPaymentOption] = useState("");
+    var token = sessionStorage.getItem("token");
 
     useEffect(()=>{
         debugger;
@@ -21,7 +23,12 @@ function Payment() {
 
     const getCartItems=()=>{
         debugger;
-        axios.get(`http://localhost:8080/cartitems/getCartItems/${customerId}`)
+        axios.get(`http://localhost:8080/cartitems/CartItems/${customerId}`,
+        {
+            headers:{
+              'Authorization': 'Bearer '+ token
+            }
+          })
         .then(res=>{
             debugger
             setCartItems(res.data)    
@@ -40,6 +47,76 @@ function Payment() {
 
     const togglePayment=(option)=>{
           setPaymentOption(option);
+    }
+
+    const placeOrder=()=>{
+      if(paymentOption===""){
+        toast.error("Please select payment option",{autoClose:2000})
+        return;
+      }
+        debugger
+        axios.post(`http://localhost:8080/orders/${customerId}`,{
+            "orderTotal": totalAmt,
+            "orderTime": "",
+            "deliveryTime": "",
+            "orderStatus": "ORDERED" 
+        }, {
+            headers:{
+              'Authorization': 'Bearer '+ token
+            }
+          }).then(res=>{
+            debugger
+            var orderId = res.data;
+            deleteCartItems();
+            sendEmail(orderId);
+            addPaymentDetails(orderId); 
+          }).catch(error=>{
+            debugger
+            console.log(error);
+          })
+    }
+
+    const sendEmail=(orderId)=>{
+      debugger
+         axios.post(`http://localhost:9999/api/sendEmail`,{
+          orderId
+         }).then(res=>{
+          debugger
+             console.log(res.data)
+         })
+         .catch(error=>{
+           debugger
+           console.log(error);
+         })
+    }
+
+    const deleteCartItems =()=>{
+        debugger
+        axios.delete(`http://localhost:9999/api/clearCart/${customerId}`,
+        ).then(res=>{
+            debugger
+            console.log(res.data);
+          }).catch(error=>{
+            debugger
+            console.log(error);
+          })
+    }
+
+    const addPaymentDetails=(orderId)=>{
+        debugger
+        axios.post(`http://localhost:8080/payments/${paymentOption}/${orderId}`,
+        {
+            headers:{
+              'Authorization': 'Bearer '+ token
+            }
+          } ).then(res=>{
+            debugger
+            toast.success("Ordered Placed Successfully");
+            navigate("/home");
+          }).catch(error=>{
+            debugger
+            console.log(error);
+          })
     }
 
   return (
@@ -63,7 +140,7 @@ function Payment() {
              <div className="box">
              <input type="radio" value="NET_BANKING" name="payment" onClick={()=>{togglePayment("NET_BANKING")}}/>NET_BANKING
              </div>
-             <button className="btn btn-success">Pay ₹{totalAmt}</button>
+             <button className="btn btn-success"onClick={placeOrder}>Pay ₹{totalAmt}</button>
            </div>
            {/* <div class="scene scene--card">
 <div class="card">

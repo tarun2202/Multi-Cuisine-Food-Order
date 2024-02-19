@@ -66,7 +66,7 @@ function About() {
   </div>
 
   <div className="top-section">
-    <div className="content">
+    <div className="acontent">
       <h3>Who We Are</h3>
       <p>Foodie, where culinary diversity meets the convenience of your doorstep. We are a passionate team 
         dedicated to bringing the world's flavors to your table. Our multicuisine delivery system is designed 
@@ -86,7 +86,7 @@ function About() {
         <div className="icon">
             <i className="fa-solid fa-address-card"></i>
         </div>
-        <div className="content">
+        <div className="acontent">
             <h3>Global Culinary Diversity</h3>
             <p>We take pride in curating a diverse menu that spans continents. From the vibrant spices 
                 of Asia to the hearty flavors of Europe and the bold tastes of the Americas, our app 
@@ -99,7 +99,7 @@ function About() {
         <div className="icon">
             <i className="fa-solid fa-book-atlas"></i>
         </div>
-        <div className="content">
+        <div className="acontent">
             <h3>Effortless Ordering:</h3>
             <p>We understand the value of your time. Our user-friendly app ensures a hassle-free ordering 
                 process, allowing you to explore, select, and order your favorite dishes with just a few taps.
@@ -111,7 +111,7 @@ function About() {
         <div className="icon">
             <i className="fa-regular fa-comments"></i>
         </div>
-        <div className="content">
+        <div className="acontent">
             <h3>Quality Assurance:</h3>
             <p>We prioritize your satisfaction, partnering with top restaurants and chefs to deliver dishes of the 
                 highest quality, freshness, and taste. Our efficient delivery ensures your favorite cuisines reach
@@ -130,7 +130,7 @@ function About() {
         {/* <div className="image">
             <img src="../images/vision.jpg" alt=""/>
         </div> */}
-        <div className="content">
+        <div className="acontent">
             <h3>Our Vision</h3>
             <p>At foodie, we believe that great food has the power to connect people, transcend borders, 
                 and create unforgettable moments. Our mission is to simplify and enhance your dining 
@@ -141,7 +141,7 @@ function About() {
     </div>
 
     <div className="mission card">
-        <div className="content">
+        <div className="acontent">
             <h3>Our Mission</h3>
             <p>At foodie, we believe that great food has the power to connect people, transcend borders, 
                 and create unforgettable moments. Our mission is to simplify and enhance your dining 
@@ -158,7 +158,7 @@ function About() {
         {/* <div className="image">
             <img src="../images/values.jpg" alt=""/>
         </div> */}
-        <div className="content">
+        <div className="acontent">
             <h3>Core Values</h3>
             <p>At foodie, we believe that great food has the power to connect people, transcend borders, 
                 and create unforgettable moments. Our mission is to simplify and enhance your dining experience 
@@ -233,7 +233,7 @@ width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 3rem;
 
     @media(max-width: 400px){
       padding-top: 0.5rem;
@@ -265,7 +265,7 @@ width: 100%;
       margin-top: 0.5rem;
     }
 
-    .content{
+    .acontent{
       width: 50%;
       color: white;
       background-color: #122b40;

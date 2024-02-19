@@ -1,54 +1,52 @@
 import { Link, useNavigate } from "react-router-dom";
-import "./Navbar.css"
+import "./VNavbar.css"
 import { toast } from "react-toastify";
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Navbar(){
+function VNavbar(){
 var isLoggedIn = sessionStorage.getItem("isLoggedIn");
 const navigate = useNavigate();
+var vendorId = sessionStorage.getItem("vendorId");
 
 
-const goToCart =()=>{
+const goToAddDish =()=>{
     debugger
-    if(isLoggedIn==="true"){
-      navigate("/cart");
-    }
-    else{
+    if(vendorId===null)
     toast.error("Please Login First");
-    }
+    else
+    navigate("/addDish");
 }
 
-const goToFavourites =()=>{
+const goToOrders =()=>{
     debugger
-    if(isLoggedIn=="true"){
-    navigate("/favourites");
-    }
-    else{
+    if(vendorId===null)
     toast.error("Please Login First");
-    }
-  }
-
-  const goToProfile=()=>{
-    if(isLoggedIn=="true")
-    navigate("/profile");
-
     else
-    toast.error("Please Login First");
+      navigate("/orders");
   }
 
+  const goToMenu=()=>{
+  if(vendorId===null)
+    toast.error("Please Login First");
+  else
+    navigate("/vendorMenu");
+  }
 return(
 <div className="nav-container-fluid">
 <div className="brand-name">
 <Link to="/" className="site-title" id="foodie">foodie</Link>
 </div>
-<div className="actions-links">
-<div className="actions">
-    <i class="fa-solid fa-cart-shopping" onClick={goToCart}></i>
+<div className="vactions-links">
+<div className="vactions">
+  <button className="orders" onClick={goToOrders}>Orders</button>
+  <button className="add-dish" onClick={goToAddDish}>Add Dish</button>
+  <button className="menu" onClick={goToMenu}>Menu</button>
+    {/* <i class="fa-solid fa-cart-shopping" onClick={goToCart}></i>
     <i class="fa-solid fa-heart" onClick={goToFavourites}></i>
-    <i class="fa-solid fa-user" onClick={goToProfile}></i>   
+    <i class="fa-solid fa-user" onClick={goToProfile}></i>    */}
 </div>
-<div className="links"> 
+<div className="vlinks"> 
     <ul>
         {/* <li><Link to ="/home" >Home</Link>
         </li> */}
@@ -63,4 +61,4 @@ return(
 );
 }
 
-export default Navbar;
+export default VNavbar;

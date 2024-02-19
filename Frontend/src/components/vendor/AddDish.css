@@ -1,12 +1,8 @@
-body{
-    margin: 0;
-    padding: 0;
- }
-.register-main-container{
+.addDish-container{
     /* margin-top: -1.5rem; */
     /* display:flex; */
     /* grid-template-columns: auto auto auto auto; */
-    background-image: linear-gradient(rgb(116, 116, 129),rgb(0, 0, 0));
+    background-image: linear-gradient(rgb(41, 27, 27),rgb(0, 147, 215));
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -17,6 +13,10 @@ body{
     top: 0;
 }
 
+body{
+    margin: 0;
+    padding: 0;
+ }
 
 .user-reg-form{
     border:solid 0.1rem;
@@ -64,21 +64,21 @@ h2{
     margin-bottom: 1rem;
 }
 
-.inner-container .vrlogin-inner-container{
+.inner-container .login-inner-container{
     color: aliceblue;
     display: flex;
     margin-top: 3rem;
 }
 
-.inner-container .vrlogin-inner-container a{
-  color: rgb(185, 255, 45);
+.inner-container .login-inner-container a{
+  color: black;
 }
 
 .user-reg-form label{
     margin-top: 0.5rem;
     font-size: larger;
     font-weight: bolder;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 Footer{

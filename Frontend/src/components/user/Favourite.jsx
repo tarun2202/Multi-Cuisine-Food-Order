@@ -3,12 +3,13 @@ import Navbar from "../home/Navbar";
 import axios from "axios";
 import React,{ useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import Footer from "../home/Footer";
 function Favourite(){
 
 const [favourites, setFavourites] = useState([]);
 var isLoggedIn = sessionStorage.getItem("isLoggedIn");
 var customerId = sessionStorage.getItem("customerId");
+var token = sessionStorage.getItem("token");
 
 useEffect(()=>{
   getFavourites();
@@ -16,7 +17,11 @@ useEffect(()=>{
 
 const getFavourites =()=>{
     debugger;
-    axios.get(`http://localhost:8080/favourites/get/${customerId}`)
+    axios.get(`http://localhost:8080/favourites/${customerId}`,{
+        headers:{
+          'Authorization': 'Bearer '+ token
+        }
+      })
     .then(res =>
         {   
             debugger
@@ -30,7 +35,12 @@ const getFavourites =()=>{
 }
 
 const removeFromFav = (favId) =>{
-    axios.delete(`http://localhost:8080/favourites/delete/${favId}`)
+    axios.delete(`http://localhost:8080/favourites/${favId}`,
+    {
+        headers:{
+          'Authorization': 'Bearer '+ token
+        }
+      })
     .then(res=>{
         if(res.data.message==="Favourite removed!")
       {
@@ -57,17 +67,18 @@ return(
              <div className="empty">
                 <h2>Sorry! There are No Favourites</h2>
              </div> : 
-        <div className='boxes'>
+        <div className='favboxes'>
           {favourites.map((fav)=>{
-           return <div className="box" key={fav.id}>
-                    <div className='menu-image'>
-                    <img src='https://b.zmtcdn.com/data/pictures/chains/5/18676685/1f8860ecd514f6ac4eef54f299ef5387_featured_v2.jpg?output-format=webp'></img>
+           return <div className="favbox" key={fav.id}>
+                    <div className='favmenu-image'>
+                    <img src={fav.dishImage}></img>
                     </div>
-                    <div className='content'>
-                     <h2>{fav.dishName}</h2>
+                    <div className='favcontent'>
+                     <h4>{fav.dishName}</h4>
                      {/* <h5>{fav.dishImage}</h5> */}
+                     <h6>{fav.vendorName}</h6>
                     <h6>₹{fav.unit_price}</h6>
-                     <h6>{fav.discount}</h6>
+                     <h6>{fav.discount} %off</h6>
                         <div className='favourite'>
                         <i class="fa-solid fa-trash" onClick={()=>{removeFromFav(fav.id)}}></i>
                         </div>
@@ -77,6 +88,13 @@ return(
   }
           </div>
 }
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<Footer/>
     </div>
 );
 }

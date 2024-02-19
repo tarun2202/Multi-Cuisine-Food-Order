@@ -1,0 +1,16 @@
+.orders-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5rem;
+    flex-direction: column;
+}
+
+/* .orders-table-container{
+    border: 2px solid black;
+} */
+
+td,tr,th{
+    border: 2px solid black;
+}
+

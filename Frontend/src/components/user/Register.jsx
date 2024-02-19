@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function Register() {
 
   const [lemail,setRemail] = useState('');
@@ -16,6 +17,11 @@ function Register() {
   const [lmobileno,setRmobileno] = useState('');
   const navigate = useNavigate();
 
+  const[street,setStreet] = useState("");
+  const[city,setCity] = useState("");
+  const[state,setState] = useState("");
+  const[country,setCountry] = useState("");
+  const[pincode,setPincode] = useState("");
   // var cards = document.querySelectorAll('.card');
 
   // [...cards].forEach((card)=>{
@@ -26,39 +32,42 @@ function Register() {
 
 
   const register = () =>{
-    if(lemail==="" || lpassword===""){
-      toast.error("please enter email and password",{autoClose:2000});
+    if(lemail==="" || lpassword==="" || lname==="" || lmobileno==="" ||
+        street==="" || city==="" || state==="" || country==="" || pincode==="" ){
+      toast.error("please enter all required fields",{autoClose:2000});
       return;
     }
     else{
-      navigate("/login");
-      return;
+      axios.post("http://localhost:8080/customer/signup",
+      {
+        "customerName": lname,
+        "customerEmail": lemail,
+        "customerPassword": lpassword,
+        "customerMobileNo": lmobileno,
+        "street": street,
+        "city": city,
+        "state": state,
+        "country": country,
+        "pincode": pincode
+      })
+      .then(res=> {
+        debugger;
+        if(res.data.message==="Registration Successfull")
+        {
+          navigate("/login");
+        }
+        else{
+          toast.error("Something went Wrong",{autoClose:2000})
+        }
+      })
+      .catch(error =>{
+        debugger;
+         console.log(error);
+         toast.error("Something went Wrong",{autoClose:2000})
+      }
+      )
     }
-  axios.post("http://localhost:8080/customers/login",
-  {
-    "name":lname,  "email":lemail, "password" : lpassword, "mobileno":lmobileno
-  })
-  .then(res=> {
-    debugger;
-    if(res.data.customerId===-1)
-    {
-      toast.error(res.data.message,{autoClose:2000});
-    }
-    else if(res.data.customerId===0){
-      toast.error(res.data.message,{autoClose:2000});
-    }
-    else{
-      sessionStorage.setItem("customerId",res.data.customerId);
-      sessionStorage.setItem("isLoggedIn",true);
-      navigate("/home");
-    }
-  }
-  )
-  .catch(error =>{
-    debugger;
-     console.log(error);
-  }
-  )
+ 
   }
 
   const  goToVendorRegister=()=> {
@@ -75,22 +84,43 @@ function Register() {
           {/* <center> */}
              <div className="user-reg-form">
                <h2 style={{fontWeight:"bolder",color:"white"}}>Register</h2>
-               <label>name</label>
+               <label>Name</label>
                <input type="text" className="form-control" placeholder="vikas kumar" value ={lname} onChange={(e)=>{setRname(e.target.value)}}></input>
-               <label>email</label>
+               <label>Email</label>
                <input type="text" className="form-control" placeholder="abc@gmail.com" value ={lemail} onChange={(e)=>{setRemail(e.target.value)}}></input>
-               <label>password</label>
+               <label>Password</label>
                <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setRpassword(e.target.value)}}></input>
-               <label>mobile no.</label>
+               <label>Mobile No.</label>
                <input type="text" className="form-control" placeholder="1234567894" value={lmobileno} onChange={(e)=>{setRmobileno(e.target.value)}}></input>
-               
-               <div className="inner-container">
+               <div className="flex">
+                <div>
+              <label>Street</label>
+              <input type="text" className="form-control" placeholder="street" value={street} onChange={(e)=>{setStreet(e.target.value)}}></input>
+              </div>
+              <div>
+              <label>City</label>
+              <input type="text" className="form-control" placeholder="Mumbai" value={city} onChange={(e)=>{setCity(e.target.value)}}></input>
+              </div>
+              </div>
+              <div className="flex">
+              <div>
+              <label>State</label>
+              <input type="text" className="form-control" placeholder="Maharashtra" value={state} onChange={(e)=>{setState(e.target.value)}}></input>
+              </div>
+              <div>
+              <label>Country</label>
+              <input type="text" className="form-control" placeholder="India" value={country} onChange={(e)=>{setCountry(e.target.value)}}></input>
+              </div>
+              </div>
+              <label>Pincode</label>
+              <input type="text" className="form-control" placeholder="451236" value={pincode} onChange={(e)=>{setPincode(e.target.value)}}></input>
+              <div className="inner-container">
                 <div className="button-container">
                <button className="btn btn-success" onClick={register}>Register</button>
                <button className="btn btn-primary" onClick={goToVendorRegister}>Register As Vendor</button>
                </div>
-               <div className="login-inner-container">
-               <p style={{color:"blue"}}>Already have an account?</p>
+               <div className="urlogin-inner-container">
+               <p style={{color:"white"}}>Already have an account?</p>
                <Link to="/login" classname="login" >Login</Link>
                </div>
                </div>

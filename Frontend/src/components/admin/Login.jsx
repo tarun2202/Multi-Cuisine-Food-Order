@@ -30,25 +30,21 @@ function Login() {
       toast.error("please enter email and password",{autoClose:2000});
       return;
     }
-  axios.post("http://localhost:8080/customer/signin",
+  axios.post("http://localhost:8080/admin/signin",
   {
     "email":lemail, "password" : lpassword
   })
   .then(res=> {
     debugger;
-    if(res.data.id!==0)
+    if(res.data.mesg==="signIn")
     {
-      sessionStorage.setItem("customerId",res.data.id);
       sessionStorage.setItem("token",res.data.jwt);
-      sessionStorage.setItem("isLoggedIn",true);
-      navigate("/home");
+      sessionStorage.setItem("adminLoggedIn",true);
+      navigate("/AdminDashboard");
     }
-    else if(res.data.id===0){
-      toast.error("You Signed Out Last Time, Please Login",{autoClose:2000})
+    else if(res.data.message==="Bad credentials"){
+      toast.error(res.data.message,{autoClose:2000});
     }
-    // else if(res.data.mesg==="Bad credentials"){
-    //   toast.error(res.data.mesg,{autoClose:2000});
-    // }
   }
   )
   .catch(error =>{
@@ -57,40 +53,31 @@ function Login() {
       toast.error("Bad Credentials,Please check",{autoClose:2000})
     }
      console.log(error);
-  }
-  )
+  })
   }
 
-  const  goToVendorLogin=()=> {
-    navigate("/vendorlogin");
-  }
+  // const  goToVendorLogin=()=> {
+  //   navigate("/vendorlogin");
+  // }
 
     return(
       <>
-      <div className="login-container">    
-      <Navbar/>
-      
+      <div className="admin-login-container">   
           {/* <div className="col-3"></div> */}
           {/* <div className="form-container"> */}
           {/* <center> */}
-             <div className="login-form">
-              <div className="login_title">
-               <h2>Login</h2>
-               </div>
-               <login-label>Email</login-label>
+             <div className="admin-form">
+               <h2>Admin Login</h2>
+               <admin-label>Email</admin-label>
                <input type="text" className="form-control" placeholder="abc@gmail.com" value ={lemail} onChange={(e)=>{setLemail(e.target.value)}}></input>
                <br></br>
-               <login-label>Password</login-label>
+               <admin-label>Password</admin-label>
                <input type="password" className="form-control" placeholder="********" value={lpassword} onChange={(e)=>{setLpassword(e.target.value)}}></input>
                
-               <div className="cinner-container">
-                <div className="cbutton-container">
-               <button className="login-button" onClick={login}>Login</button>
-               <button className="vlogin-button" onClick={goToVendorLogin}>Login As Vendor</button>
-               </div>
-               <div className="cregister-container">
-               <p>Don't have an account?</p>
-               <Link to="/userRegister" classname="register" > Register Here</Link>
+               <div className="inner-container">
+                <div className="button-container">
+               <button className="admin-btn" onClick={login}>Login</button>
+               {/* <button className="btn btn-primary" onClick={goToVendorLogin}>Login As Vendor</button> */}
                </div>
                </div>
              </div>

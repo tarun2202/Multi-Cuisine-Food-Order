@@ -166,7 +166,7 @@ background-color: #eaf5ff;
       font-weight: 700;
       text-align: center;
       margin-block: 1rem;
-      margin-top:4rem;
+      margin-top:5rem;
 
       @media(max-width: 768px){
         font-size: 2.5rem;

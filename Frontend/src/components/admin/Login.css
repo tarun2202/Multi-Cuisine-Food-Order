@@ -2,11 +2,11 @@ body{
     margin: 0;
     padding: 0;
  }
-.vendor-login-container{
+.admin-login-container{
     /* margin-top: -1.5rem; */
     /* display:flex; */
     /* grid-template-columns: auto auto auto auto; */
-    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20201101/pngtree-scene-with-geometrical-forms-the-poster-model-minimal-background-render-image_452981.jpg");
+    background-image: url("https://cdn.pixabay.com/photo/2020/04/16/11/13/background-5050213_1280.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -19,24 +19,26 @@ body{
 }
 
 
-.vlogin-form{
-    padding-bottom: 2rem;
+.admin-form{
+    padding: 1rem;
     background-color: inherit;
-    margin-top: 6rem;
-    margin-bottom: 5rem;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
     height: 42%;
     width: 40%;
     margin-left: 30%;
-}
+  }
 
-.vlogin-form input:hover{
+.admin-form input:hover{
   background-color: rgb(168, 244, 247);
 }
-
 
 h2{
     text-align: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3rem;
+    font-weight: bolder;
+    color: azure;
 }
 
 
@@ -44,33 +46,32 @@ h2{
     margin-top: 1rem;
 }
 
-.vinner-container{
+.inner-container{
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
+
  }
 
-.vinner-container a{
+.inner-container a{
+    color: rgb(140, 187, 240);
     text-decoration: underline;
 }
 
-.vinner-container .vbutton-container{
-    display: flex;
-    padding-top: 3.5rem;
+.inner-container .button-container{
+    display:flex;
     gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.vinner-container .vregister-container{
-    color: rgb(0, 0, 0);
+.inner-container .register-container{
+    color: aliceblue;
     display: flex;
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 
-.vinner-container .vregister-container a{
-  color: rgb(124, 0, 0);
-}
-
-vlogin-label{
-    margin-top: 0.5rem;
+admin-label{
     color: rgb(0, 0, 0);
     font-size: larger;
 }
@@ -104,6 +105,16 @@ body { font-family: sans-serif; }
   transform: translateX(-100%) rotateY(-180deg);
 }
 
+.admin-btn{
+  background-image: linear-gradient(grey,white);
+  border-radius: 0.5rem;
+  font-size: large;
+  bottom: 0.5rem;
+  width: 5rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
 .card__face {
   position: absolute;
   width: 100%;
@@ -123,21 +134,5 @@ body { font-family: sans-serif; }
 .card__face--back {
   background: slateblue;
   transform: rotateY(180deg);
-}
-
-.button-vlogin{
-  width: 5rem;
-  height: 2rem;
-  border-radius: 0.5rem;
-  background-image: linear-gradient(rgb(78, 77, 77),white);
-  font-weight: bold;
-}
-
-.button-ulogin{
-  width: 8rem;
-  height: 2rem;
-  border-radius: 0.5rem;
-  background-image: linear-gradient(rgb(78, 77, 77),white);
-  font-weight: bold;
 }
 

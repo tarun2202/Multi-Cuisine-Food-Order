@@ -49,7 +49,7 @@ function Footer() {
         <div className="box">
             <h3>Quick Links</h3>
             <a href="/" className="links"><i className="fa-solid fa-arrow-right"></i>Home</a>
-            <a href="/dellogin" className="links"><i className="fa-solid fa-arrow-right"></i>Delivery</a>
+            <a href="/adminlogin" className="links"><i className="fa-solid fa-arrow-right"></i>Admin</a>
             <a href="/about"  className="links"><i className="fa-solid fa-arrow-right"></i>About Us</a>
             <a href="/contact" className="links"><i className="fa-solid fa-arrow-right"></i>Contact Us</a>
         </div>

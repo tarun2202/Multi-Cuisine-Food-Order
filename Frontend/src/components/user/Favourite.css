@@ -1,6 +1,6 @@
 .favourites-container{
     width: 100%;
-    background-image: linear-gradient(green,white);
+    background-image: linear-gradient(rgb(1, 99, 1),rgb(0, 0, 0));
     padding-top: 4rem;
 }
 
@@ -11,39 +11,42 @@
     font-weight: bolder;
 }
 
-.boxes{
+.favboxes{
     display: flex;
     justify-content: center;
     gap: 2rem;
     padding: 1rem;
 }
 
-.boxes .box{
+.favboxes .favbox{
    display: flex;
    flex-direction:column;
    background-color: rgb(255, 255, 255);
    border-radius: 1rem;
+   width: 20rem;
 }
 
-.boxes .box h2{
+.favboxes .favbox h2{
     text-align: left;
  }
 
 
-.boxes .box .menu-image{
+.favboxes .favbox .favmenu-image{
     width: 100%;
     /* background-color: red; */
 }
 
-.menu-image img{
+.favmenu-image img{
     height: 15rem;
     width: 100%;
     border-radius: 1rem;
 }
 
-.content{
+.favcontent{
     padding: 0.5rem;
-    background-color: rgb(211, 222, 246);
+    background-color: rgb(197, 198, 200);
+    border-radius: 0.5rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 

@@ -25,7 +25,7 @@
 
 .home-container .main-container .small-container{
    background-color:inherit;
-   top:3rem;
+   top:4rem;
    position: relative;
    display: flex;
    justify-content:right ;
@@ -44,6 +44,10 @@
 .home-container .main-container .small-container ul a{
  color: black;
  font-family: Verdana, Geneva, Tahoma, sans-serif;
+ font-size: larger;
+ font-weight: bold;
+ text-decoration: none;
+ text-shadow: 0px 12px 15px rgb(0, 0, 0);
 }
 
 .main-container .title{
@@ -115,17 +119,18 @@
    padding-left: 1rem;
    width: 100%;
    background-image: linear-gradient(rgb(153, 153, 235),white);
+   margin-bottom: 1rem;
 }
 
-.content{
+.foodcontent{
    padding: 0.5rem;
    padding-top: 1.5rem;
-   background-color: rgb(219, 217, 231);
    width: 100%;
    height: 100%;
+   border-radius: 1rem;
 }
 
-.content h2{
+.foodcontent h2{
    text-align: left;
 }
 
@@ -134,21 +139,21 @@
    gap: 0.5rem;
    /* background-color:red; */
    align-items: center;
+   margin-top: -2rem;
 }
 
 .buttons .favourite{
    /* background-color: rgb(255, 255, 255); */
-   padding: 1rem;
-   height: 1.5rem;
+   height: 1rem;
    display: flex;
    justify-content: center;
    align-items: center;
-   margin-top: 1rem;
 }
 
 .buttons .favourite i{
    font-size: 1.5rem;
    color: rgb(0, 0, 0);
+   margin-bottom: 1rem;
 }
 
 .buttons .btn{
@@ -165,23 +170,26 @@
    }
 }
 
-.card{
-   align-items: start;
+.home-container .menu-container .foodcard{
    margin-bottom: 1rem;
    margin-left: 1rem;
    margin-right: 1rem;
-   background-color: red;
+   display: flex;
+   flex-direction: column;
+   border-radius: 1rem;
+   background-color: rgb(145, 140, 140);
 }
 
-.card img{
-object-fit: contain;
+.foodcard img{
+object-fit: cover;
 width: 100%;
 height: 15rem;
 /* background-color: red; */
+border-radius: 1rem;
 }
 
-.card .image{
+.foodcard .image{
    height: 15rem;
    width: 100%;
-   background-color: #fff;
+   border-radius: 1rem;
 }

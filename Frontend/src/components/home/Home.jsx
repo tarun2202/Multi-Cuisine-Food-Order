@@ -8,6 +8,7 @@ import { Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 
+
 function Home() {
 
 
@@ -20,6 +21,7 @@ function Home() {
     // const[dishList,setDishList] = useState([]);
     var isLoggedIn = sessionStorage.getItem("isLoggedIn");
     var customerId = sessionStorage.getItem("customerId");
+    var token = sessionStorage.getItem("token");
 
 
     useEffect(()=>{
@@ -35,16 +37,22 @@ function Home() {
     const getDishes = ()=>{
       debugger;
          const Cuisinedata=axios.get("http://localhost:8080/dishes")
-        .then((response)=>{ debugger; setDishes(response.data)
+        .then((response)=>{ debugger; 
+          setDishes(response.data)
           console.log(response.data);
-                             
+                    
         })
         .catch((error)=>{ debugger; setError(error.message)})
         }
         
     const goToMenu = ()=>{
+      if(cuisine.length===0){
+        toast.error("Please Enter a Dish Name",{autoClose:2000})
+      }
+      else{
       sessionStorage.setItem("menu",cuisine);
       navigate("/menu");
+      }
     }
 
     const addToCart=(dishId,unitPrice,discount)=>{
@@ -54,11 +62,16 @@ function Home() {
         return;
       }
       var totalAmount = unitPrice*(1-discount);
-      axios.post(`http://localhost:8080/cartitems/add/${customerId}/${dishId}`,{
+      axios.post(`http://localhost:8080/cartitems/${customerId}/${dishId}`,{
         "unit_price": unitPrice,
         "quantity": 1,
         "discount": discount,
         "totalAmount": totalAmount
+      },
+      {
+        headers:{
+          'Authorization': 'Bearer '+ token
+        }
       })
       .then(res=>{
         debugger;
@@ -88,12 +101,21 @@ function Home() {
         toast.error("Please login first",{autoClose:2000});
         return;
       }
-      axios.post(`http://localhost:8080/favourites/add/${customerId}/${dishId}`)
+      axios.post(`http://localhost:8080/favourites/${customerId}/${dishId}`,
+      {
+        headers:{
+          'Authorization': 'Bearer '+ token
+        }
+      })
       .then(res=>{
         debugger;
         if(res.data.message==="Favourite added succesfully!")
         {
           toast.success("Favourite added succesfully!",{autoClose:2000});
+        }
+        else if(res.data.message==="This dish is already present in your favourites")
+        {
+          toast.error("This dish is already present in your favourites",{autoClose:2000});
         }
         else{
           toast.error("something went wrong",{autoClose:2000});
@@ -147,15 +169,16 @@ return (
  <div className='menu-container'>
    <div className="grid">
     {dishes.map((dish)=>{
-           return <div className="card" key={dish.id}>
+           return <div className="foodcard" key={dish.id}>
                     <div className='image'>
-                    <img src='https://b.zmtcdn.com/data/pictures/chains/5/18676685/1f8860ecd514f6ac4eef54f299ef5387_featured_v2.jpg?output-format=webp'></img>
+                    <img src={dish.dishImage}></img>
                     </div>
-                    <div className='content'>
-                     <h2>{dish.dishName}</h2>
+                    <div className='foodcontent'>
+                     <h4>{dish.dishName}</h4>
                      <h5>{dish.category}</h5>
                      <h6>{dish.description}</h6>
-                     <h6>{dish.discount}</h6>
+                     <h6>{dish.vendorName}</h6>
+                     <h6>{dish.discount*100} %off</h6>
                      <h6>₹{dish.price}</h6>
                      <div className='buttons'>
                         <button className='btn btn-dark' onClick={()=>{addToCart(dish.id,dish.price,dish.discount)}}>Add To Cart</button>

@@ -2,6 +2,24 @@
     background-image: linear-gradient(grey,white);
     width: 100%;
     margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menu-container .action{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.menu-container .action button{
+    background-color: rgb(0, 183, 255);
+    border-radius: 1rem;
+    text-shadow: 0 0 5px #e1e1e1, /* White glow */
+    0 0 2px #000000, /* White glow */
+    0 0 5px  #ffffff, /* Magenta glow */
+    0 0 2px #030902 ;
 }
 
 .menu-container h1{
@@ -24,6 +42,7 @@
    flex-direction:column;
    background-color: rgb(59, 122, 180);
    border-radius: 1rem;
+  
 }
 
 .boxes .box h2{
@@ -42,7 +61,7 @@
     border-radius: 1rem;
 }
 
-.content{
+.vmenu-content{
     padding: 0.5rem;
 }
 
@@ -51,6 +70,7 @@
     gap: 0.5rem;
     /* background-color:red; */
     align-items: center;
+    padding-top: 2rem;
 }
 
 .buttons .favourite{
@@ -63,9 +83,10 @@
     margin-top: 1rem;
 }
 
-.buttons .favourite i{
-    font-size: 1.5rem;
-    color: rgb(255, 255, 255);
+.buttons i{
+    padding-top: 1rem;
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
 }
 
 .buttons .btn{
