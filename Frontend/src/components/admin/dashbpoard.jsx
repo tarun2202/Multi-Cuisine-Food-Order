@@ -128,7 +128,7 @@ var adminLoggedIn = sessionStorage.getItem("adminLoggedIn");
       })
   }
   return <>
-  <div>
+  <div className='ad-title'>
     <h1>Admin Dashboard</h1>
   </div>
   <hr></hr>

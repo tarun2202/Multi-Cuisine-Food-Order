@@ -75,6 +75,9 @@ return(
                     </div>
                     <div className='favcontent'>
                      <h4>{fav.dishName}</h4>
+                     <h6>{fav.cuisine}</h6>
+                     <h6>{fav.category}</h6>
+                     <h6>{fav.description.length > 50 ? `${fav.description.substring(0, 50)}...` : fav.description}</h6>
                      {/* <h5>{fav.dishImage}</h5> */}
                      <h6>Vendor: {fav.vendorName}</h6>
                     <h6>₹{fav.unit_price}</h6>

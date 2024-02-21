@@ -9,9 +9,19 @@
     background-size: cover;
 }
 
+.orders-container h1{
+    font-size: 5rem;
+    font-weight: bold;
+    text-shadow: 0px 10px 10px rgb(0, 8, 226);
+    color: #000000;
+}
 /* .orders-table-container{
     border: 2px solid black;
 } */
+
+.orders-container table{
+    margin-top: 2rem;
+}
 
 td,tr,th{
     border: 2px solid black;

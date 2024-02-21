@@ -74,7 +74,7 @@ function Login() {
           {/* <div className="form-container"> */}
           {/* <center> */}
              <div className="vlogin-form">
-               <h2 style={{fontWeight:"bolder",color:"black"}}>Vendor Login</h2>
+               <h2 >Vendor Login</h2>
                <vlogin-label>Email</vlogin-label>
                <input type="text" className="form-control" placeholder="abc@gmail.com"  value ={lemail} onChange={(e)=>{setLemail(e.target.value)}}></input>
               <br></br>

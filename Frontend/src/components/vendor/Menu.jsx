@@ -98,9 +98,11 @@ function Menu(){
                     </div>
                     <div className='vmenu-content'>
                      <h4>{dish.dishName}</h4>
-                     <h5>{dish.category}</h5>
-                     <h6>{dish.description}</h6>
+                     <h6>{dish.category}</h6>
+                     <h6>{dish.cuisine}</h6>
+                     <h6>{dish.description.length > 50 ? `${dish.description.substring(0, 50)}...` : dish.description}</h6>
                      <h6>₹{dish.price}</h6>
+                     <h6>{dish.discount} %off</h6>
                      <div className='buttons'>
                         <button className="btn btn-danger" onClick={()=>{editDish(dish.id)}} >Edit</button>
                         <i class="fa-solid fa-trash" onClick={()=>{deleteDish(dish.id)}} ></i>

@@ -175,8 +175,9 @@ return (
                     </div>
                     <div className='foodcontent'>
                      <h4>{dish.dishName}</h4>
-                     <h5>{dish.category}</h5>
-                     <h6>{dish.description}</h6>
+                     <h6>{dish.category}</h6>
+                     <h6>{dish.cuisine}</h6>
+                     <h6>{dish.description.length > 50 ? `${dish.description.substring(0, 50)}...` : dish.description}</h6>
                      <h6>Vendor: {dish.vendorName}</h6>
                      <h6>{dish.discount*100} %off</h6>
                      <h6>₹{dish.price}</h6>

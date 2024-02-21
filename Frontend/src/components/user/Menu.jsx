@@ -129,9 +129,11 @@ function Menu(){
                     <div className='mmenu-content'>
                      <h4>{dish.dishName}</h4>
                      <h6>{dish.category}</h6>
-                     <h6>{dish.description}</h6>
-                     <h6>{dish.vendorName}</h6>
+                     <h6>{dish.cuisine}</h6>
+                     <h6>{dish.description.length > 50 ? `${dish.description.substring(0, 50)}...` : dish.description}</h6>
                      <h6>₹{dish.price}</h6>
+                     <h6>{dish.discount} %off</h6>
+                     <h6>Vendor:-{dish.vendorName}</h6>
                      <div className='mbuttons'>
                         <button className='btn btn-dark' onClick={()=>{addToCart(dish.id,dish.price,dish.discount)}}>
                           Add To Cart</button>

@@ -44,10 +44,13 @@ body{
   background-color: rgb(148, 231, 235);
 }
 
-h2{
+.login_title h2{
     text-align: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    text-shadow: 0px 0px 10px black;
+    text-shadow: 0px 15px 15px rgb(0, 0, 0),
+    0px 0px 10px black,
+    0px 0px 10px black;
+    color: rgb(255, 255, 255);
 }
 
 
@@ -86,7 +89,7 @@ h2{
 }
 
 .cinner-container .cregister-container a{
-  color: #080037;
+  color: #150071;
 }
 
 login-label{
@@ -115,6 +118,7 @@ body { font-family: sans-serif; }
   height: 2rem;
   border-radius: 0.5rem;
   background-image: linear-gradient(rgb(112, 111, 111),white);
+  font-weight: bold;
 }
 
 .vlogin-button{
@@ -122,4 +126,5 @@ body { font-family: sans-serif; }
   height: 2rem;
   border-radius: 0.5rem;
   background-image: linear-gradient(rgb(112, 111, 111),white);
+  font-weight: bold;
 }
