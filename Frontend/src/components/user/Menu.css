@@ -32,7 +32,7 @@
  }
 
 
-.mboxes .box .mmenu-image{
+.mboxes .mbox .mmenu-image{
     width: 100%;
     /* background-color: red; */
 }
@@ -65,12 +65,4 @@
 .mbuttons .mfavourite i{
     font-size: 1.5rem;
     color: rgb(0, 0, 0);
-}
-
-.mbuttons .btn{
-    height: 100%;
-}
-
-.mboxes h2{
-    margin-top: 10rem;
 }
