@@ -93,8 +93,11 @@ public class FavouriteServiceImpl implements FavouriteService {
 			String dishImage = dish.getDishImage();
 			double discount = dish.getDiscount();
 			double unitprice = dish.getPrice();
+			String cuisine = dish.getCuisine().name();
+			String category = dish.getCategory().name();
 			String vendName = vendor.getVendorName();
-			FavouriteResponseDTO favouriteItemsResponse = new FavouriteResponseDTO(fav.getId(),dishName,dishImage,unitprice,discount,vendName);
+			String desc = dish.getDescription();
+			FavouriteResponseDTO favouriteItemsResponse = new FavouriteResponseDTO(fav.getId(),dishName,dishImage,unitprice,discount,vendName,cuisine,category,desc);
 			favouriteResponseList.add(favouriteItemsResponse);
 		}
 

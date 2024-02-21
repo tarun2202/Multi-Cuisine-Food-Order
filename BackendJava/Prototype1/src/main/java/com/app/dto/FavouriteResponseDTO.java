@@ -25,9 +25,15 @@ public class FavouriteResponseDTO {
 	private double discount;
 	
 	private String vendorName;
+	
+	private String cuisine;
+	
+	private String category;
+	
+	private String description;
 
 	public FavouriteResponseDTO(Long id, String dishName, String dishImage, double unit_price, double discount,
-			String vendorName) {
+			String vendorName, String cuisine, String category, String description) {
 		super();
 		this.id = id;
 		this.dishName = dishName;
@@ -35,6 +41,10 @@ public class FavouriteResponseDTO {
 		this.unit_price = unit_price;
 		this.discount = discount;
 		this.vendorName = vendorName;
+		this.cuisine = cuisine;
+		this.category = category;
+		this.description = description;
 	}
+
 
 }
