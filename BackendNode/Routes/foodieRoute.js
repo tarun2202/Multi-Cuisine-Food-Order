@@ -29,6 +29,25 @@ foodieRouter.get('/getOrders/:id',async(request,response)=>{
     }
 })
 
+foodieRouter.post('/feedback',async(request,response)=>{
+    try{
+        var{feedback,customerId,dishId}=request.body;
+        console.log(feedback,customerId,dishId);
+        console.log(typeof customerId, typeof dishId);
+        var custId = Number(customerId);
+        var dId = Number(dishId);
+        console.log(typeof custId, typeof dId);
+         var statement = `INSERT into review (feedback,customer_id,dish_id) values("${feedback}",${custId},${dId});`;
+         var data = await executeQuery(statement);
+         console.log(data)
+         response.status(200).send("Thank you for your valuable feedback!");
+    }
+    catch(error){
+        response.status(400).send({"error": error});
+        console.log(error);
+    }
+})
+
 foodieRouter.put('/changeStatus/:id',async(request,response)=>{
     try{
          var statement = `UPDATE orders set order_status="OUTFORDELIVERY"
@@ -45,7 +64,19 @@ foodieRouter.delete('/deleteCartItems/:id',async(request,response)=>{
     try{
          var statement = `DELETE from cart_item where id=${request.params.id}`;
          var data = await executeQuery(statement);
-         response.status(200).send({message:"DELETED"});
+         response.status(200).send(data);
+    }
+    catch(error){
+        response.status(400).send({"error": error});
+    }
+})
+
+foodieRouter.get('/orderItems/:id',async(request,response)=>{
+    try{
+         var statement = `select d.dish_name,d.price,v.vendor_name,oi.quantity,d.id as dishId
+         from dish d , vendors v, order_items oi, customers c, orders o where oi.dish_id=d.id and d.vendor_id=v.id and o.id=oi.order_id and o.customer_id=c.id and c.id=${request.params.id}; `;
+         var data = await executeQuery(statement);
+         response.status(200).send(data);
     }
     catch(error){
         response.status(400).send({"error": error});
