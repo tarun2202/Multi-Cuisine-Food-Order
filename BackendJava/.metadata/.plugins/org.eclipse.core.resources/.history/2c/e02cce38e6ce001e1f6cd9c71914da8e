@@ -1,0 +1,66 @@
+package com.app.entities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+public class Dish extends BaseEntity {
+
+	@Column(nullable = false,length = 25)
+	private String dishName;
+	
+	@Column(nullable = false,length = 255)
+	private String description;
+	
+	@Column(nullable = false,length = 25)
+	@Enumerated(EnumType.STRING)
+	private FoodCategory category;
+	
+	
+	@Column(nullable = false,length = 25)
+	@Enumerated(EnumType.STRING)
+	private CuisineType cuisine;
+	
+	@Column(nullable = false,columnDefinition = "INT DEFAULT 4 ")
+	private int rating;
+	
+	@Column(nullable = false)
+	private double price;
+	
+	@Column(nullable = false,columnDefinition = "FLOAT DEFAULT 0.0 ")
+	private double discount;
+	
+	@Column(nullable = false,length = 255)
+	private String dishImage;
+	
+	@ManyToOne
+	@JoinColumn(name = "vendor_id",nullable = false)
+	private Vendors vendor;
+	
+	@OneToOne(mappedBy = "dish")
+	
+	private CartItem cartItem;
+	
+}

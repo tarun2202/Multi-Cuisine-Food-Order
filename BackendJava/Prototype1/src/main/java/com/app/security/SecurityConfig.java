@@ -31,7 +31,7 @@ public class SecurityConfig {
 				.antMatchers("/dishes","/customer/signin", "/vendor/signin", "/admin/signin", "/customer/signup",
 						"/vendor/signup","/customers/login","/cartitems/{customerId}/{dishId}","/dishes/byname/{dishName}"
 						,"/favourites/**","/orders/{customerId}","/cartitems/{customerId}","/payments/{paymentMethod}/{orderId}"
-						,"/dishes/{vendorId}/{dishId}","/dishes/{vendorId}","/dishes/get/{dishId}","/admin/**","/admin/vendors/{vendorId}","/customers/{customerId}","/dishes/{vendorId}/{dishId}","/v*/api-doc*/**", "/swagger-ui/**")
+						,"/dishes/{vendorId}/{dishId}","/dishes/{vendorId}","/dishes/get/{dishId}","/admin/**","/admin/vendors/{vendorId}","/customers/{customerId}","orderItems/{customerId}","/dishes/{vendorId}/{dishId}","/v*/api-doc*/**", "/swagger-ui/**")
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

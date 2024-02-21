@@ -1,0 +1,91 @@
+package com.app.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.AddressDao;
+import com.app.dao.CustomerDao;
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.CustomerSignUpDTO;
+import com.app.dto.CustomerUpdateDTO;
+import com.app.dto.LoginDTO;
+import com.app.dto.LoginResponseDTO;
+import com.app.dto.OrderDTO;
+import com.app.entities.Address;
+import com.app.entities.Customers;
+
+@Service
+@Transactional
+public class CustomerServiceImpl implements CustomerService {
+
+	@Autowired
+	private CustomerDao customerDao;
+
+	@Autowired
+	private ModelMapper mapper;
+	
+	@Autowired
+	private AddressDao addressDao;
+
+	@Override
+	public List<OrderDTO> getAllOrdersByCustomerId(Long customerId) {
+		Customers customer = customerDao.findById(customerId).orElseThrow();
+
+		return customer.getOrderList().stream().map(orders -> mapper.map(orders, OrderDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Long validateAndLogin(LoginDTO cred) {
+		Customers customer = customerDao.findByCustomerEmail(cred.getEmail()).orElse(null);
+	     if (customer!= null)
+	     {
+	    	 if(customer.getCustomerPassword().equals(cred.getPassword()))
+	    	 {
+	    		return customer.getId();
+	    	 }
+	    	 else {
+	    		 return 0L;
+	    	 }
+	     }
+	     else
+	    	 return -1L;
+	}
+
+	@Override
+	public CustomerSignUpDTO getProfile(Long customerId) {
+		Customers customer = customerDao.findById(customerId).orElse(null);
+		
+		CustomerSignUpDTO cusSignupDto = new CustomerSignUpDTO();
+		
+		cusSignupDto.setId(customerId);
+		cusSignupDto.setCustomerName(customer.getCustomerName());
+		cusSignupDto.setCustomerEmail(customer.getCustomerEmail());
+		cusSignupDto.setCustomerMobileNo(customer.getCustomerMobileNo());
+		cusSignupDto.setCustomerPassword("abc");
+
+		Address address = addressDao.getByCustomerId(customerId).get(0);
+		
+		cusSignupDto.setStreet(address.getStreet());
+		cusSignupDto.setCity(address.getCity());
+		cusSignupDto.setState(address.getCity());
+		cusSignupDto.setCountry(address.getCountry());
+		cusSignupDto.setPincode(address.getPincode());
+		
+		return cusSignupDto;
+	}
+
+	@Override
+	public ApiResponseDTO updateProfile(Long customerId, CustomerUpdateDTO updateDto) {
+		Customers customer = customerDao.findById(customerId).orElse(null);
+		
+		addressDao
+	}
+	
+
+}

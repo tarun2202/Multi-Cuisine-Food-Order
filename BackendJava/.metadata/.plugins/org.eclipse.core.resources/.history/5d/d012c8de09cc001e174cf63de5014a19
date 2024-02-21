@@ -1,0 +1,102 @@
+package com.app.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.CartItemDao;
+import com.app.dao.CustomerDao;
+import com.app.dao.DishDao;
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.CartItemDTO;
+import com.app.dto.CartItemResponseDTO;
+import com.app.entities.CartItem;
+import com.app.entities.Customers;
+import com.app.entities.Dish;
+
+@Service
+@Transactional
+public class CartItemServiceImpl implements CartItemService {
+
+	@Autowired
+	private CartItemDao cartItemDao;
+
+	@Autowired
+	private CustomerDao customerDao;
+
+	@Autowired
+	private DishDao dishDao;
+	
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public ApiResponseDTO addCartItem(Long customerId, Long dishId,CartItemDTO cartItemDetails) {
+
+		Customers customer = customerDao.getReferenceById(customerId);
+
+		Dish dish = dishDao.getReferenceById(dishId);
+
+		CartItem cartItem = mapper.map(cartItemDetails, CartItem.class);
+		cartItem.setCustomer(customer);
+		cartItem.setDish(dish);
+		cartItemDao.save(cartItem);
+
+		return new ApiResponseDTO("Cart item added!");
+	}
+
+	@Override
+	public List<CartItemResponseDTO> getCartItem(Long customerId) {
+	   
+		List<CartItem> cartItemsList =cartItemDao.findByCustomerId(customerId);
+		
+		List<CartItemResponseDTO> cartItemsResponseDTOList = new ArrayList<CartItemResponseDTO>();
+		
+		for (CartItem item : cartItemsList) {
+			Dish dish = dishDao.findById(item.getDish().getId()).orElse(null);
+			String dishName = dish.getDishName();
+			String dishImage = dish.getDishImage();
+			CartItemResponseDTO cartItemDto = new CartItemResponseDTO(item.getId(),item.getUnit_price()
+					,item.getQuantity(),item.getDiscount(),item.getTotalAmount(),customerId
+					,dish.getId(),dishName,dishImage);
+			cartItemsResponseDTOList.add(cartItemDto);
+		}
+		
+		return cartItemsResponseDTOList;
+	}
+
+	@Override
+	public ApiResponseDTO increaseQuantity(Long cartItemId) {
+		CartItem item = cartItemDao.findById(cartItemId).orElse(null);
+		int quantity= item.getQuantity();
+		item.setQuantity(quantity+1);
+		item.setTotalAmount(item.getUnit_price()*(quantity+1)*(1-item.getDiscount()));
+		cartItemDao.save(item);
+		return new ApiResponseDTO("Increased");
+	}
+	
+	@Override
+	public ApiResponseDTO decreaseQuantity(Long cartItemId) {
+		CartItem item = cartItemDao.findById(cartItemId).orElse(null);
+		int quantity= item.getQuantity();
+		if(quantity==1) {
+			item.setCustomer(null);
+			item.setDish(null);
+			cartItemDao.delete(item);
+			return new ApiResponseDTO("Deleted");
+		}
+		else {
+		item.setQuantity(quantity-1);
+		item.setTotalAmount(item.getUnit_price()*(quantity-1)*(1-item.getDiscount()));
+		cartItemDao.save(item);
+		return new ApiResponseDTO("Decreased");
+		}
+	}
+
+}

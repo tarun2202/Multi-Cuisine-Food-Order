@@ -1,0 +1,22 @@
+package com.app.service;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.VendorDTO;
+import com.app.entities.Vendors;
+
+
+public interface AdminService {
+
+	List<VendorDTO> getAllVendors();
+
+	ApiResponseDTO approveVendor(Long vendorId);
+
+	Object inactiveVendor(Long vendorId);
+
+}

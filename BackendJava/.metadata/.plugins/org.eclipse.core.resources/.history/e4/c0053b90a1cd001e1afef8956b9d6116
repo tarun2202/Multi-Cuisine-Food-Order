@@ -1,0 +1,67 @@
+package com.app.dto;
+
+public class DeliveryDTO {
+	
+	private Long odrerId;
+	
+	private String userName;
+	
+	private List dishName;
+	
+	private String address;
+	
+	private String mobileNo;
+	
+	private double total;
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public Long getOdrerId() {
+		return odrerId;
+	}
+
+	public void setOdrerId(Long odrerId) {
+		this.odrerId = odrerId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getDishName() {
+		return dishName;
+	}
+
+	public void setDishName(String dishName) {
+		this.dishName = dishName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+	
+	
+
+}

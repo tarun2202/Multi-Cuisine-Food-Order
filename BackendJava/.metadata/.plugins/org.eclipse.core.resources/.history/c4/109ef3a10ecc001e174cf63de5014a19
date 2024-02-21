@@ -1,0 +1,22 @@
+package com.app.controller;
+
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+public class PaymentController {
+
+	
+	@Autowired
+	private PaymentService paymentService;
+	
+	//add payment details in db
+	@PostMapping("/{paymentMethod}/{orderId}")
+	public ResponseEntity<?> addPaymentDetails(@PathVariable @NotBlank PaymentMethod paymentMethod,@PathVariable @NotNull Long orderId){
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(paymentService.addPaymentDetails(paymentMethod,orderId));
+	}
+}

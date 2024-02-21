@@ -1,0 +1,15 @@
+package com.app.dto;
+
+public class DeliveryDTO {
+	
+	private Long odrerId;
+	
+	private String userName;
+	
+	private String dishName;
+	
+	private String address;
+	
+	private String mobileNo;
+
+}

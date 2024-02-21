@@ -1,0 +1,141 @@
+package com.app.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.DishDao;
+import com.app.dao.VendorDao;
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.DishDTO;
+import com.app.entities.Dish;
+import com.app.entities.Vendors;
+import com.fasterxml.jackson.databind.ser.std.MapProperty;
+
+@Service
+@Transactional
+public class DishServiceImpl implements DishService {
+
+	@Autowired
+	private DishDao dishDao;
+
+	@Autowired
+	private VendorDao vendorDao;
+
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public List<DishDTO> getAllDishes() {
+		List<Dish> dishes = dishDao.findAll();
+
+		List<DishDTO> dishDTO = dishes.stream().map(dish -> mapper.map(dish, DishDTO.class))
+				.collect(Collectors.toList());
+
+		return dishDTO;
+	}
+
+	@Override
+	public List<DishDTO> getAllDishesByName(String dishName) {
+
+		List<Dish> dishes = dishDao.findAll();
+		
+		List<DishDTO> listDishes = new ArrayList<DishDTO>();
+		
+		for (Dish dish : dishes) {
+			if(dish.getDishName().toLowerCase().contains(dishName.toLowerCase())) {
+				DishDTO dishDTO = mapper.map(dish, DishDTO.class);
+				listDishes.add(dishDTO);
+			}
+		}
+		
+//		List<DishDTO> dishDTO = dishes.stream().map(dish -> mapper.map(dish, DishDTO.class))
+//				.collect(Collectors.toList());
+
+		return listDishes;
+	}
+
+	@Override
+	public ApiResponseDTO addDishDetails(Long vendorId, DishDTO dish) {
+		Dish dishEnt = mapper.map(dish, Dish.class);
+		// getReferenceById returns proxy which reduces the select query fired by
+		// hibernate
+		Vendors vendor = vendorDao.getReferenceById(vendorId);
+		dishEnt.setVendor(vendor);
+		dishDao.save(dishEnt);
+
+		return new ApiResponseDTO("Dish added succesfully!");
+	}
+
+	@Override
+	public ApiResponseDTO deleteDishDetails(Long dishId, Long vendorId) {
+		//3 queries fired by hibernate
+		Vendors vendor = vendorDao.findById(vendorId).orElse(null);
+
+		Dish dish = dishDao.findById(dishId).orElse(null);
+
+	     vendor.removeDish(dish);
+	     
+	     System.out.println("okokok");
+
+		//2 queries fired by hibernate but any vendor can delete any dish(other vendors dish) by id
+		//dishDao.deleteById(dishId);
+		vendorDao.save(vendor);
+		return new ApiResponseDTO("Deletion succesfull!");
+	}
+
+	@Override
+	public List<DishDTO> getDishByVendorId(Long vendorId) {
+		
+		Vendors vendor = vendorDao.findById(vendorId).orElse(null);
+		
+		List<Dish> dishList = dishDao.findByVendor(vendor);
+		
+		List<DishDTO> dishDTOList = dishList.stream().map(dish -> mapper.map(dish, DishDTO.class))
+				                   .collect(Collectors.toList());
+		
+		return dishDTOList;	
+	}
+
+
+	@Override
+	public DishDTO getDishById(Long dishId) {
+		// TODO Auto-generated method stub
+		Dish dish = dishDao.findById(dishId).orElse(null);
+	
+		DishDTO dishDTO = mapper.map(dish, DishDTO.class);
+// 
+//		DishDTO dishDto = new DishDTO();
+//		
+//		if(dish!=null) {
+//		dishDto.setId(dishId);
+//		
+//		dishDto.setDishName(dish.ge);
+//		}
+		
+		return dishDTO;
+ }
+
+	@Override
+	public ApiResponseDTO updateDish(Long dishId, DishDTO dishDto) {
+		Dish dish = dishDao.findById(dishId).orElse(null);
+		
+		dish.setDishName(dishDto.getDishName());
+		dish.setDishImage(dishDto.getDishImage());
+		dish.setDescription(dishDto.getDescription());
+		dish.setCuisine(dishDto.getCuisine());
+		dish.setCategory(dishDto.getCategory());
+		dish.setPrice(dishDto.getPrice());
+		dish.setDiscount(dishDto.getDiscount());
+		dishDao.save(dish);
+		return new ApiResponseDTO("Dish Updated!");
+	}
+	
+}
+

@@ -1,0 +1,17 @@
+package com.app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class PaymentController {
+
+	
+	@Autowired
+	private PaymentService paymentService;
+	
+	//add payment details in db
+	@PostMapping("/{paymentMethod}/{orderId}")
+	public ResponseEntity<?> addPaymentDetails(@PathVariable @NotBlank PaymentMethod paymentMethod,@PathVariable @NotNull Long orderId){
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(paymentService.addPaymentDetails(paymentMethod,orderId));
+	}
+}

@@ -1,0 +1,94 @@
+package com.app.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.dao.CustomerDao;
+import com.app.dao.DishDao;
+import com.app.dao.OrderDao;
+import com.app.dao.VendorDao;
+import com.app.dto.AdminDashboardDTO;
+import com.app.dto.ApiResponseDTO;
+import com.app.dto.VendorDTO;
+import com.app.entities.Status;
+import com.app.entities.Vendors;
+
+@Service
+@Transactional
+
+public class AdminServiceImpl implements AdminService {
+	
+    @Autowired
+    private ModelMapper mapper;
+    
+	
+	@Autowired
+	private VendorDao vendorDao;
+	
+	@Autowired
+	private CustomerDao customerDao;
+	
+	@Autowired
+	private DishDao dishDao;
+	
+	@Autowired
+	private OrderDao orderDao;
+	
+	
+
+	@Override
+	public List<VendorDTO> getAllInactiveVendors() {
+//		List<Vendors> VendorList = vendorDao.findAll();
+		
+		List<Vendors> inactiveVendorList = vendorDao.findByVendorStatus(Status.INACTIVE);
+		
+		return inactiveVendorList.stream().map(vendor->mapper.map(vendor, VendorDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public ApiResponseDTO approveVendor(Long vendorId) {
+		Vendors vendor = vendorDao.findById(vendorId).orElse(null);
+		
+		vendor.setVendorStatus(Status.ACTIVE);
+		
+		vendorDao.save(vendor);
+		
+		return new ApiResponseDTO("Successfully Approved The Vendor!");
+	}
+
+	@Override
+	public ApiResponseDTO inactiveVendor(Long vendorId) {
+Vendors vendor = vendorDao.findById(vendorId).orElse(null);
+		
+		vendor.setVendorStatus(Status.INACTIVE);
+		
+		vendorDao.save(vendor);
+		
+		return new ApiResponseDTO("Successfully Inactivated The Vendor!");
+	}
+
+	@Override
+	public List<VendorDTO> getAllActiveVendors() {
+        List<Vendors> VendorList = vendorDao.findAll();
+		
+		List<Vendors> activeVendorList = vendorDao.findByVendorStatus(Status.ACTIVE);
+		
+		return activeVendorList.stream().map(vendor->mapper.map(vendor, VendorDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public AdminDashboardDTO adminDashboard() {
+		
+		AdminDashboardDTO adminDto = new AdminDashboardDTO();
+		adminDto.s
+	}
+
+}

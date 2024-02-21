@@ -1,0 +1,10 @@
+package com.app.dto;
+
+public class AdminDashboardDTO {
+
+	int vendorCount;
+	int customerCount;
+	int dishCount;
+	double revenue;
+	int orderCount;
+}

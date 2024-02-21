@@ -1,0 +1,11 @@
+package com.app.dto;
+
+public class deliveryDTO {
+	
+	private Long odrerId;
+	
+	private String userName;
+	
+	pri
+
+}
