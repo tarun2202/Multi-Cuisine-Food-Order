@@ -15,7 +15,7 @@ const goToCart =()=>{
       navigate("/cart");
     }
     else{
-    toast.error("Please Login First",{autoClose:2000});
+    toast.error("Please Login First");
     }
 }
 
@@ -25,7 +25,7 @@ const goToFavourites =()=>{
     navigate("/favourites");
     }
     else{
-    toast.error("Please Login First",{autoClose:2000});
+    toast.error("Please Login First");
     }
   }
 
@@ -34,13 +34,13 @@ const goToFavourites =()=>{
     navigate("/profile");
 
     else
-    toast.error("Please Login First",{autoClose:2000});
+    toast.error("Please Login First");
   }
 
 return(
 <div className="nav-container-fluid">
 <div className="brand-name">
-<Link to="/" className="site-title" id="foodie">FoodHub</Link>
+<Link to="/" className="site-title" id="foodie">foodie</Link>
 </div>
 <div className="actions-links">
 <div className="actions">

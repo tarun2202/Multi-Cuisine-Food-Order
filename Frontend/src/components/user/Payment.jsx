@@ -126,8 +126,13 @@ function Payment() {
         {/* <div className="col-3"></div> */}
         {/* <div className="form-container"> */}
         {/* <center> */}
-           <div className="form">
-             <h2 style={{fontWeight:"bolder",color:"white"}}>Payment</h2>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h2 style={{fontWeight:"bolder",color:"white"}}>Payment</h2>
+           <div className="pform">
+             
              <div className="box">
              <input type="radio" value="UPI" name="payment" onClick={()=>{togglePayment('UPI')}}/>UPI
              </div>
@@ -140,7 +145,7 @@ function Payment() {
              <div className="box">
              <input type="radio" value="NET_BANKING" name="payment" onClick={()=>{togglePayment("NET_BANKING")}}/>NET_BANKING
              </div>
-             <button className="btn btn-success"onClick={placeOrder}>Pay ₹{totalAmt}</button>
+             <button className="btn btn-success"onClick={placeOrder} style={{width:"10rem"}}>Pay ₹{totalAmt}</button>
            </div>
            {/* <div class="scene scene--card">
 <div class="card">
@@ -151,6 +156,11 @@ function Payment() {
            {/* </center> */}
           {/* </div> */}
         {/* <div className="col-3"></div> */}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <Footer/>
     </div>
   )

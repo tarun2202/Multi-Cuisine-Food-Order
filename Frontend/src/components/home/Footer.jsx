@@ -27,23 +27,23 @@ function Footer() {
 <div className="footer">
     <div className="footer-container">
       <div className="box logo">
-          <h3>foodie</h3>
+          <h3>FoodHub</h3>
           <p>Your Health, Our Priority</p>
 
           <div className="share">
-              <a className="fab fa-facebook-f"></a>
-              <a className="fab fa-twitter"></a>
-              <a className="fab fa-instagram"></a>
-              <a className="fab fa-linkedin"></a>
+              <a className="fab fa-facebook-f" href='https://www.facebook.com/'></a>
+              <a className="fab fa-twitter"href='https://twitter.com/i/flow/login'></a>
+              <a className="fab fa-instagram"href='https://www.instagram.com/'></a>
+              <a className="fab fa-linkedin" href='https://www.linkedin.com/'></a>
           </div>
       </div>
 
         <div className="box">
             <h3>Contact</h3>
-            <a className="links"><i className="fas fa-phone"></i> +123-456-789</a>
-            <a className="links"><i className="fas fa-phone"></i> +111-222-333</a>
-            <a className="links"><i className="fas fa-envelope"></i> sample@gmail.com</a>
-            <a className="links"><i className="fas fa-map-marker-alt"></i> Hinjawadi, Pune, India</a>
+            <a className="links"><i className="fas fa-phone"></i> +951-890-4262</a>
+            <a className="links"><i className="fas fa-phone"></i> +020-235-760</a>
+            <a className="links"><i className="fas fa-envelope"></i> foodhub@gmail.com</a>
+            <a className="links"><i className="fas fa-map-marker-alt"></i> Hinjewadi, Pune, India</a>
         </div>
 
         <div className="box">
@@ -65,7 +65,7 @@ function Footer() {
     </div>
 
     <div className="credits">
-        foodie @ 2024 | All Rights Reserved
+        FoodHub @ 2024 | All Rights Reserved
     </div>
 </div>
     </Container>

@@ -75,3 +75,7 @@ h3{
   border-radius: 1rem;
   margin-bottom: 2rem;
 }
+
+th{
+  background-image: linear-gradient(rgb(93, 93, 93),white);
+}

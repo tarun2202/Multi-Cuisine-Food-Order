@@ -67,6 +67,9 @@ const changeStatus =(id)=>{
                  ))}
             </tbody>
           </table>
+          <br/>
+          <br/>
+          <br/>
         </div>
     </div>
   )

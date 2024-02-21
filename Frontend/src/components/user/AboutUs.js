@@ -179,7 +179,7 @@ function About() {
         <div className="person card">
         <div className="small">
             <img src={"https://cdn-icons-png.flaticon.com/128/560/560277.png"} alt=""/>
-            <h4>John Doe</h4>
+            <h4>Nikhil Patil</h4>
             <p>Database Expert</p>
             <p>Ensured efficient and secure data storage, retrieval, and management, optimizing database performance.</p>
         </div>
@@ -188,7 +188,7 @@ function About() {
         <div className="person card">
           <div className="small">
             <img src={"https://cdn-icons-png.flaticon.com/128/4140/4140048.png"} alt=""/>
-            <h4>Richard Roe</h4>
+            <h4>Tarun Kumar</h4>
             <p>UI/UX Designer</p>
             <p>Crafted an engaging and user-friendly interface, enhancing the overall user experience and visual appeal.</p>
         </div>
@@ -197,7 +197,7 @@ function About() {
         <div className="person card">
         <div className="small">
             <img src={"https://cdn-icons-png.flaticon.com/128/4140/4140047.png"} alt=""/>
-            <h4>Jane Doe</h4>
+            <h4>Viraj Malap</h4>
             <p>Web Java Developer</p>
             <p>Implemented robust backend logic and functionality using Java and dynamic behavior.</p>
         </div>
@@ -206,7 +206,7 @@ function About() {
         <div className="person card">
         <div className="small">
             <img src={"https://cdn-icons-png.flaticon.com/128/236/236832.png"} alt=""/>
-            <h4>John Smith</h4>
+            <h4>Kshitij Ray</h4>
             <p>CI/CD Engineer</p>
             <p>Established a seamless and automated Continuous Integration/Continuous Deployment pipeline.</p>
         </div>

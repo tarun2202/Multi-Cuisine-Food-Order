@@ -35,7 +35,7 @@ const goToOrders =()=>{
 return(
 <div className="nav-container-fluid">
 <div className="brand-name">
-<Link to="/" className="site-title" id="foodie">foodie</Link>
+<Link to="/" className="site-title" id="foodie">FoodHub</Link>
 </div>
 <div className="vactions-links">
 <div className="vactions">

@@ -76,7 +76,7 @@ return(
                     <div className='favcontent'>
                      <h4>{fav.dishName}</h4>
                      {/* <h5>{fav.dishImage}</h5> */}
-                     <h6>{fav.vendorName}</h6>
+                     <h6>Vendor: {fav.vendorName}</h6>
                     <h6>₹{fav.unit_price}</h6>
                      <h6>{fav.discount} %off</h6>
                         <div className='favourite'>

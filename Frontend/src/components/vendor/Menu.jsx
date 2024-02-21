@@ -97,7 +97,7 @@ function Menu(){
                     <img src={dish.dishImage}></img>
                     </div>
                     <div className='vmenu-content'>
-                     <h2>{dish.dishName}</h2>
+                     <h4>{dish.dishName}</h4>
                      <h5>{dish.category}</h5>
                      <h6>{dish.description}</h6>
                      <h6>₹{dish.price}</h6>
@@ -110,6 +110,11 @@ function Menu(){
     })
   }
           </div>
+          <br />
+<br />
+<br />
+<br />
+<br />
           <Footer/>
          </div>
       

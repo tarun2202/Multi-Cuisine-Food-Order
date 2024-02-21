@@ -86,6 +86,10 @@ const updateProfile=()=>{
    })
 }
 
+const goToOrders=()=>{
+  navigate("/customerOrders");
+}
+
 const logout=()=>{
   sessionStorage.clear();
   navigate("/home");
@@ -102,7 +106,7 @@ const logout=()=>{
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item >Your Orders</Dropdown.Item>
+        <Dropdown.Item onClick={goToOrders} >Your Orders</Dropdown.Item>
         <Dropdown.Item >Help</Dropdown.Item>
         <Dropdown.Item onClick={logout}>LogOut</Dropdown.Item>
       </Dropdown.Menu>

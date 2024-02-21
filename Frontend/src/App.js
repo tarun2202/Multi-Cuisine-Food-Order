@@ -29,8 +29,8 @@ import VendorMenu from "./components/vendor/Menu";
 import AddDish from "./components/vendor/AddDish";
 import EditDish from "./components/vendor/EditDish";
 import Orders from "./components/vendor/Orders";
-
-
+import CustomerOrders from "./components/user/Orders";
+import Feedback from "./components/user/Feedback"
 
 
 function App(){
@@ -66,6 +66,8 @@ return <>
             <Route path="/addDish" element = {<AddDish/>} exact/>
             <Route path="/editDish" element = {<EditDish/>} exact/>
             <Route path="/orders" element = {<Orders/>} exact/>
+            <Route path="/Customerorders" element = {<CustomerOrders/>} exact/>
+            <Route path="/feedback" element = {<Feedback/>} exact/>
 </Routes>
 <ToastContainer
  pauseOnHover={false}

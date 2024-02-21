@@ -144,7 +144,7 @@ return (
   }
    
     <div className="title">
-      <h1>foodie</h1>
+      <h1>FoodHub</h1>
       <p>Find the best restaurants, cafés and bars in India</p>
     <div className="searchbar">
     <input className='form-control' 
@@ -177,7 +177,7 @@ return (
                      <h4>{dish.dishName}</h4>
                      <h5>{dish.category}</h5>
                      <h6>{dish.description}</h6>
-                     <h6>{dish.vendorName}</h6>
+                     <h6>Vendor: {dish.vendorName}</h6>
                      <h6>{dish.discount*100} %off</h6>
                      <h6>₹{dish.price}</h6>
                      <div className='buttons'>
